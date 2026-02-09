@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <application
+        android:name=".MainApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -12,14 +13,21 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.QuanLyLichHoc">
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.home.HomeActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ui.subject.SubjectListActivity" />
+        <activity android:name=".ui.subject.SubjectDetailActivity" />
+        <activity android:name=".ui.subject.AddEditSubjectActivity" />
+        <activity android:name=".ui.schedule.ScheduleActivity" />
+        <activity android:name=".ui.task.TaskActivity" />
+        <activity android:name=".ui.exam.ExamActivity" />
+        <activity android:name=".ui.note.NoteActivity" />
+        <activity android:name=".ui.document.DocumentActivity" />
     </application>
 
 </manifest>
