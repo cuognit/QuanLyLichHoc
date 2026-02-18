@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="0dp"
+    app:cardBackgroundColor="@color/white">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <CheckBox
+            android:id="@+id/cb_complete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <TextView
+            android:id="@+id/tv_task_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="Nộp bài tập lớn nhóm 4"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/text_title"
+            app:layout_constraintStart_toEndOf="@id/cb_complete"
+            app:layout_constraintEnd_toStartOf="@id/chip_priority"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_task_desc"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Môn Kiến trúc máy tính"
+            android:textColor="@color/text_subtitle"
+            app:layout_constraintStart_toStartOf="@id/tv_task_title"
+            app:layout_constraintEnd_toStartOf="@id/chip_priority"
+            app:layout_constraintTop_toBottomOf="@id/tv_task_title" />
+
+        <TextView
+            android:id="@+id/chip_priority"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_rounded_card"
+            android:backgroundTint="@color/pastel_pink_bg"
+            android:paddingHorizontal="8dp"
+            android:paddingVertical="4dp"
+            android:text="Hôm nay"
+            android:textColor="@color/pastel_pink_text"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

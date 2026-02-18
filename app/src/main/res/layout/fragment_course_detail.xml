@@ -1,0 +1,588 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F8F9FD">
+
+    <!-- Header / Top Bar -->
+    <ImageView
+        android:id="@+id/btn_back"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:padding="8dp"
+        android:src="@drawable/ic_back_arrow"
+        app:tint="@color/text_title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/btn_more"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:padding="8dp"
+        android:src="@drawable/ic_more_vert"
+        app:tint="@color/text_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toTopOf="@id/layout_bottom_actions"
+        app:layout_constraintTop_toBottomOf="@id/btn_back">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="24dp">
+
+            <!-- Title Section -->
+            <TextView
+                android:id="@+id/tv_course_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:text="Nhập môn Lập trình"
+                android:textColor="@color/text_title"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@id/iv_course_icon"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <!-- Tags -->
+            <TextView
+                android:id="@+id/tv_credits"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/bg_tag_purple_light"
+                android:backgroundTint="#F3E5F5"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="4dp"
+                android:text="3 Tín chỉ"
+                android:textColor="@color/purple_700"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@id/tv_course_title"
+                app:layout_constraintTop_toBottomOf="@id/tv_course_title" />
+
+            <TextView
+                android:id="@+id/tv_department"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="Khoa KH Máy tính"
+                android:textColor="@color/text_secondary"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@id/tv_credits"
+                app:layout_constraintStart_toEndOf="@id/tv_credits"
+                app:layout_constraintTop_toTopOf="@id/tv_credits" />
+
+            <!-- Course Icon -->
+            <ImageView
+                android:id="@+id/iv_course_icon"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/circle_purple"
+                android:padding="12dp"
+                android:src="@drawable/ic_calendar_purple"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_course_title"
+                tools:src="@drawable/ic_calendar_purple" 
+                app:tint="@color/white"/>
+
+            <!-- General Info Header -->
+            <TextView
+                android:id="@+id/tv_header_general"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="24dp"
+                android:text="Thông tin chung"
+                android:textColor="@color/text_title"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_credits" />
+
+            <!-- Location Card -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/card_location"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/bg_rounded_card_white"
+                android:padding="16dp"
+                app:layout_constraintEnd_toStartOf="@id/card_lecturer"
+                app:layout_constraintStart_toStartOf="@id/tv_header_general"
+                app:layout_constraintTop_toBottomOf="@id/tv_header_general">
+
+                <ImageView
+                    android:id="@+id/iv_location"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:background="@drawable/circle_orange_light"
+                    android:backgroundTint="#FFF3E0"
+                    android:padding="6dp"
+                    android:src="@drawable/ic_location"
+                    app:tint="#FF9800"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Địa điểm"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="12sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/iv_location" />
+
+                <TextView
+                    android:id="@+id/tv_location"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="Phòng 304"
+                    android:textColor="@color/text_title"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/iv_location"
+                    android:layout_marginBottom="0dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:paddingTop="20dp"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- Lecturer Card -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/card_lecturer"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/bg_rounded_card_white"
+                android:padding="16dp"
+                app:layout_constraintBottom_toBottomOf="@id/card_location"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/card_location"
+                app:layout_constraintTop_toTopOf="@id/card_location">
+
+                <ImageView
+                    android:id="@+id/iv_lecturer"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:background="@drawable/circle_blue_light"
+                    android:backgroundTint="#E3F2FD"
+                    android:padding="6dp"
+                    android:src="@drawable/ic_profile"
+                    app:tint="#2196F3"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Giảng viên"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="12sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/iv_lecturer" />
+
+                <TextView
+                    android:id="@+id/tv_lecturer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="GV. Huyền"
+                    android:textColor="@color/text_title"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/iv_lecturer"
+                     android:paddingTop="20dp"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- Time Card -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/card_time"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/bg_rounded_card_white"
+                android:padding="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/tv_header_general"
+                app:layout_constraintTop_toBottomOf="@id/card_location">
+
+                <ImageView
+                    android:id="@+id/iv_time"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:background="@drawable/circle_green_light"
+                    android:backgroundTint="#E8F5E9"
+                    android:padding="6dp"
+                    android:src="@drawable/ic_time"
+                    app:tint="#4CAF50"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_label_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:text="Thời gian"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="12sp"
+                    app:layout_constraintStart_toEndOf="@id/iv_time"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Thứ Hai • 09:00 - 11:30"
+                    android:textColor="@color/text_title"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="@id/tv_label_time"
+                    app:layout_constraintTop_toBottomOf="@id/tv_label_time" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- Related Tasks Header -->
+            <TextView
+                android:id="@+id/tv_header_tasks"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="Nhiệm vụ liên quan"
+                android:textColor="@color/text_title"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@id/tv_header_general"
+                app:layout_constraintTop_toBottomOf="@id/card_time" />
+
+            <TextView
+                android:id="@+id/btn_see_all_tasks"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:text="Xem tất cả"
+                android:textColor="@color/purple_700"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@id/tv_header_tasks"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_header_tasks" />
+
+            <!-- Task List (Mock items for now) -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout_task_1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/bg_rounded_card_white"
+                android:padding="12dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/tv_header_tasks"
+                app:layout_constraintTop_toBottomOf="@id/tv_header_tasks">
+                
+                <View
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:background="@drawable/checkbox_custom"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+                
+                <TextView
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:layout_marginStart="36dp"
+                     android:text="Nộp bài tập lớn"
+                     android:textStyle="bold"
+                     android:textColor="@color/text_title"
+                     app:layout_constraintStart_toStartOf="parent"
+                     app:layout_constraintTop_toTopOf="parent"/>
+
+                <TextView
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:layout_marginStart="36dp"
+                     android:layout_marginTop="20dp"
+                     android:text="Hạn: Ngày mai, 23:59"
+                     android:textSize="12sp"
+                     android:textColor="#F44336"
+                     app:layout_constraintStart_toStartOf="parent"
+                     app:layout_constraintTop_toTopOf="parent"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- Learning Materials -->
+             <TextView
+                android:id="@+id/tv_header_materials"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="Tài liệu học tập"
+                android:textColor="@color/text_title"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@id/tv_header_general"
+                app:layout_constraintTop_toBottomOf="@id/layout_task_1" />
+            
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/layout_materials_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="12dp"
+                android:orientation="vertical"
+                android:background="@drawable/bg_rounded_card_white"
+                android:padding="8dp"
+                app:layout_constraintTop_toBottomOf="@id/tv_header_materials">
+
+                <!-- Material Item 1 -->
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp">
+
+                    <ImageView
+                        android:id="@+id/iv_mat_1"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/circle_red_light"
+                        android:backgroundTint="#FFEBEE"
+                        android:padding="8dp"
+                        android:src="@drawable/ic_pdf"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
+
+                    <TextView
+                        android:id="@+id/tv_mat_1_title"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginEnd="8dp"
+                        android:text="De_cuong_mon_hoc.pdf"
+                        android:textStyle="bold"
+                        android:textColor="@color/text_title"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        app:layout_constraintEnd_toStartOf="@id/iv_arrow_1"
+                        app:layout_constraintStart_toEndOf="@id/iv_mat_1"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="2.4 MB • Cập nhật hôm qua"
+                        android:textSize="12sp"
+                        android:textColor="@color/text_secondary"
+                        app:layout_constraintTop_toBottomOf="@id/tv_mat_1_title"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="@id/tv_mat_1_title"
+                        android:layout_marginTop="2dp"/>
+
+                    <ImageView
+                        android:id="@+id/iv_arrow_1"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_chevron_right"
+                        app:tint="@color/text_secondary"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                 <View
+                     android:layout_width="match_parent"
+                     android:layout_height="1dp"
+                     android:background="#F0F0F0"
+                     android:layout_marginVertical="4dp"/>
+
+                 <!-- Material Item 2 -->
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp">
+
+                    <ImageView
+                        android:id="@+id/iv_mat_2"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/circle_blue_light"
+                        android:backgroundTint="#E3F2FD"
+                        android:padding="8dp"
+                        android:src="@drawable/ic_link"
+                         app:tint="#2196F3"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
+
+                    <TextView
+                        android:id="@+id/tv_mat_2_title"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginEnd="8dp"
+                        android:text="Slide Bài giảng 1 - Giới thiệu"
+                        android:textStyle="bold"
+                        android:textColor="@color/text_title"
+                         android:ellipsize="end"
+                        android:maxLines="1"
+                        app:layout_constraintEnd_toStartOf="@id/iv_arrow_2"
+                        app:layout_constraintStart_toEndOf="@id/iv_mat_2"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="Liên kết Google Drive"
+                        android:textSize="12sp"
+                        android:textColor="@color/text_secondary"
+                        app:layout_constraintTop_toBottomOf="@id/tv_mat_2_title"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="@id/tv_mat_2_title"
+                        android:layout_marginTop="2dp"/>
+
+                    <ImageView
+                        android:id="@+id/iv_arrow_2"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_chevron_right"
+                        app:tint="@color/text_secondary"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <!-- Notes Section -->
+            <TextView
+                android:id="@+id/tv_header_notes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="Ghi chú"
+                android:textColor="@color/text_title"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@id/tv_header_general"
+                app:layout_constraintTop_toBottomOf="@+id/layout_materials_list"
+                android:layout_marginBottom="100dp"/> <!-- Space for content below -->
+
+              <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/bg_rounded_card_white"
+                android:backgroundTint="#FFF9C4"
+                android:padding="16dp"
+                app:layout_constraintTop_toBottomOf="@id/tv_header_notes">
+
+                <TextView
+                    android:id="@+id/tv_note_content"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Các nhóm dự án cần được chia vào thứ Sáu.\nNhớ kiểm tra các yêu cầu về API backend trước khi bắt đầu."
+                    android:textColor="#5D4037"
+                    android:lineSpacingExtra="4dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+                
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="Chạm để sửa"
+                    android:textColor="#8D6E63"
+                    android:textStyle="bold"
+                    android:textSize="12sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_note_content"/>
+                    
+                 <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginTop="16dp"
+                    android:src="@drawable/ic_edit_white"
+                    app:tint="#8D6E63"
+                    app:layout_constraintStart_toEndOf="@+id/tv_note_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                     app:layout_constraintEnd_toEndOf="parent"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            
+            <!-- Spacer for bottom padding -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                app:layout_constraintTop_toBottomOf="@id/tv_header_notes"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+    <!-- Bottom Actions -->
+    <LinearLayout
+        android:id="@+id/layout_bottom_actions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        android:background="#FFFFFF"
+        android:elevation="16dp"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <TextView
+            android:id="@+id/btn_edit_course"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/button_primary"
+            android:gravity="center"
+            android:text="Chỉnh sửa"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/btn_delete_course"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/button_secondary"
+            android:backgroundTint="#FFEBEE"
+            android:gravity="center"
+            android:text="Xóa"
+            android:textColor="#D32F2F"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

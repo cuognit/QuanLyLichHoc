@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_main">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="80dp">
+
+        <!-- Header -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="24dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cài đặt"
+                android:textColor="@color/text_title"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <!-- Profile Image -->
+            <ImageView
+                android:id="@+id/img_avatar"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+
+                android:src="@drawable/ic_profile"
+                android:background="@drawable/bg_rounded_card"
+                android:padding="2dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" 
+                android:layout_marginTop="56dp" />
+
+            <!-- Edit Icon -->
+            <View
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:background="@drawable/bg_add_button"
+                android:backgroundTint="#8B5CF6"
+                app:layout_constraintBottom_toBottomOf="@id/img_avatar"
+                app:layout_constraintEnd_toEndOf="@id/img_avatar" />
+
+            <ImageView
+                android:layout_width="14dp"
+                android:layout_height="14dp"
+                android:src="@drawable/ic_camera"
+                app:layout_constraintBottom_toBottomOf="@id/img_avatar"
+                app:layout_constraintEnd_toEndOf="@id/img_avatar"
+                app:layout_constraintStart_toStartOf="@null"
+                app:layout_constraintTop_toTopOf="@null"
+                android:translationX="-5dp"
+                android:translationY="-5dp"
+                />
+
+            <TextView
+                android:id="@+id/tv_user_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Nguyen Thế Thi"
+                android:textColor="@color/text_title"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/img_avatar" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="thi.nguyen@example.com"
+                android:textColor="@color/text_secondary"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_user_name" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- Account Section -->
+        <TextView
+            style="@style/SettingsSectionHeader"
+            android:text="TÀI KHOẢN" />
+
+        <LinearLayout
+            style="@style/SettingsGroupCard">
+
+            <include
+                layout="@layout/item_setting_row"
+                android:id="@+id/row_personal_info" />
+            
+            <View style="@style/SettingsDivider" />
+
+            <include
+                layout="@layout/item_setting_row"
+                android:id="@+id/row_change_password" />
+        </LinearLayout>
+        
+        <!-- App Section -->
+        <TextView
+            style="@style/SettingsSectionHeader"
+            android:text="ỨNG DỤNG" />
+
+        <LinearLayout
+            style="@style/SettingsGroupCard">
+             <include
+                layout="@layout/item_setting_row"
+                android:id="@+id/row_notifications" />
+
+            <View style="@style/SettingsDivider" />
+            
+             <include
+                layout="@layout/item_setting_row"
+                android:id="@+id/row_dark_mode" />
+
+            <View style="@style/SettingsDivider" />
+
+             <include
+                layout="@layout/item_setting_row"
+                android:id="@+id/row_language" />
+        </LinearLayout>
+
+        <!-- Data Section -->
+        <TextView
+            style="@style/SettingsSectionHeader"
+            android:text="DỮ LIỆU" />
+
+        <LinearLayout
+            style="@style/SettingsGroupCard">
+             <include
+                layout="@layout/item_setting_row"
+                android:id="@+id/row_backup" />
+        </LinearLayout>
+
+        <!-- Support Section -->
+        <TextView
+            style="@style/SettingsSectionHeader"
+            android:text="HỖ TRỢ" />
+
+        <LinearLayout
+            style="@style/SettingsGroupCard">
+             <include
+                layout="@layout/item_setting_row"
+                android:id="@+id/row_contact" />
+            <View style="@style/SettingsDivider" />
+             <include
+                layout="@layout/item_setting_row"
+                android:id="@+id/row_policy" />
+        </LinearLayout>
+
+        <!-- Logout Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_logout"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginHorizontal="24dp"
+            android:layout_marginTop="32dp"
+            android:text="Đăng xuất"
+            android:textColor="#EF4444"
+            android:textStyle="bold"
+            app:icon="@drawable/ic_logout"
+            app:iconTint="#EF4444"
+            app:iconGravity="textStart"
+            android:backgroundTint="@color/white"
+            app:cornerRadius="16dp"
+            app:strokeColor="#FEE2E2"
+            app:strokeWidth="1dp"
+            android:elevation="2dp"
+            android:stateListAnimator="@null"/>
+
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

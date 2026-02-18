@@ -1,0 +1,192 @@
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_main">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="80dp">
+
+        <!-- Header -->
+        <TextView
+            android:id="@+id/tv_greeting"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="16dp"
+            android:text="Chào buổi sáng, Thi"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="@color/text_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/img_avatar"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Thứ Ba, 12 Tháng 10"
+            android:textSize="14sp"
+            android:textColor="@color/text_subtitle"
+            app:layout_constraintStart_toStartOf="@id/tv_greeting"
+            app:layout_constraintTop_toBottomOf="@id/tv_greeting" />
+
+        <ImageView
+            android:id="@+id/img_avatar"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginEnd="24dp"
+            android:background="@drawable/bg_rounded_card"
+            android:src="@drawable/ic_profile"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_greeting"
+            app:layout_constraintBottom_toBottomOf="@id/tv_date" />
+
+        <!-- Lịch học hôm nay -->
+        <TextView
+            android:id="@+id/tv_section_schedule"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="32dp"
+            android:text="Lịch học hôm nay"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/text_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_date" />
+
+        <TextView
+            android:id="@+id/tv_view_all_schedule"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="24dp"
+            android:text="Xem tất cả"
+            android:textColor="@color/purple_500"
+            app:layout_constraintBottom_toBottomOf="@id/tv_section_schedule"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_section_schedule" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_schedule_today"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:paddingHorizontal="16dp"
+            android:clipToPadding="false"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:orientation="horizontal"
+            tools:itemCount="2"
+            tools:listitem="@layout/item_class_card"
+            app:layout_constraintTop_toBottomOf="@id/tv_section_schedule" />
+
+        <TextView
+            android:id="@+id/tv_empty_schedule"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:text="Không có lịch học hôm nay"
+            android:textColor="@color/text_secondary"
+            android:textSize="14sp"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/tv_section_schedule" />
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/barrier_schedule"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="rv_schedule_today,tv_empty_schedule" />
+
+        <!-- Sắp diễn ra (Exam/Event) -->
+        
+        <!-- Replacing LocalBroadcastManager filler with actual layout or include -->
+         <LinearLayout
+            android:id="@+id/layout_exam_section"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+             android:layout_marginTop="24dp"
+             android:paddingHorizontal="16dp"
+            app:layout_constraintTop_toBottomOf="@id/barrier_schedule">
+             
+             <!-- This will be populated by the Adapter or just a single View -->
+             <!-- For now, I'll use a RecyclerView for "Special Events" or just "Up next" -->
+             <TextView
+                android:text="Đếm ngược kỳ thi"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/text_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"/>
+
+             <include 
+                android:id="@+id/card_exam_countdown"
+                layout="@layout/item_exam_card"/>
+         </LinearLayout>
+
+
+        <!-- Cần làm gấp (Tasks) -->
+        <TextView
+            android:id="@+id/tv_section_tasks"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:text="Cần làm gấp"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/text_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_exam_section" />
+        
+        <TextView
+            android:id="@+id/tv_task_count"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="24dp"
+            android:gravity="center"
+            android:background="@drawable/bg_rounded_card"
+            android:backgroundTint="@color/pastel_blue_bg"
+            android:text="2"
+            android:textColor="@color/pastel_blue_text"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@id/tv_section_tasks"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_section_tasks" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_urgent_tasks"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:paddingHorizontal="16dp"
+            android:clipToPadding="false"
+            tools:itemCount="3"
+            tools:listitem="@layout/item_task_card"
+            app:layout_constraintTop_toBottomOf="@id/tv_section_tasks" />
+
+        <TextView
+            android:id="@+id/tv_empty_tasks"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:text="Không có nhiệm vụ gấp"
+            android:textColor="@color/text_secondary"
+            android:textSize="14sp"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/tv_section_tasks" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>

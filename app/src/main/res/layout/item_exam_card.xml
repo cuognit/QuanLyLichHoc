@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="24dp"
+    app:cardElevation="4dp"
+    app:cardBackgroundColor="@android:color/transparent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_gradient_blue"
+        android:padding="24dp">
+
+        <TextView
+            android:id="@+id/tv_exam_tag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_rounded_card"
+            android:backgroundTint="@color/white"
+            android:alpha="0.8"
+            android:paddingHorizontal="12dp"
+            android:paddingVertical="6dp"
+            android:text="Sắp diễn ra"
+            android:textColor="@color/pastel_blue_text"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/btn_edit_exam"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_edit_white"
+            android:background="@drawable/bg_rounded_card"
+            android:backgroundTint="#33FFFFFF"
+            android:contentDescription="Edit"
+            android:padding="8dp"
+            android:scaleType="fitCenter"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_subject"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Kỳ thi giữa kỳ - CSDL"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_exam_tag" />
+
+        <TextView
+            android:id="@+id/tv_countdown_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Thời gian còn lại"
+            android:textColor="@color/white"
+            android:alpha="0.9"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_subject" />
+
+        <TextView
+            android:id="@+id/tv_countdown"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="3 ngày nữa"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_countdown_label" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_action"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ôn tập ngay"
+            android:textColor="@color/pastel_blue_text"
+            android:backgroundTint="@color/white"
+            app:cornerRadius="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_subject" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

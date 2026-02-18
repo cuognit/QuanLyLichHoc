@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="16dp">
+
+    <!-- Time Section -->
+    <TextView
+        android:id="@+id/tv_start_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:text="07:00"
+        android:textColor="@color/text_title"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/card_class" />
+
+    <TextView
+        android:id="@+id/tv_end_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="08:45"
+        android:textColor="@color/text_secondary"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="@id/tv_start_time"
+        app:layout_constraintTop_toBottomOf="@id/tv_start_time" />
+
+    <!-- Timeline Line (Optional, implicitly created by alignment) -->
+    
+    <!-- Class Card -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_class"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        app:cardCornerRadius="24dp"
+        app:cardElevation="0dp"
+        app:cardBackgroundColor="@color/pastel_purple_bg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tv_start_time"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp">
+
+            <!-- Side Accent Bar -->
+            <View
+                android:id="@+id/view_accent"
+                android:layout_width="4dp"
+                android:layout_height="0dp"
+                android:background="@color/purple_500"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_subject_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="8dp"
+                android:text="Toán Cao Cấp"
+                android:textColor="@color/purple_700"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@id/tv_status_tag"
+                app:layout_constraintStart_toEndOf="@id/view_accent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_status_tag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_rounded_card"
+                android:backgroundTint="@color/purple_500"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="4dp"
+                android:text="ĐANG DIỄN RA"
+                android:textColor="@color/white"
+                android:textSize="10sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/ic_location"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_marginTop="8dp"
+                android:src="@drawable/ic_location"
+                app:tint="@color/purple_700"
+                app:layout_constraintStart_toStartOf="@id/tv_subject_name"
+                app:layout_constraintTop_toBottomOf="@id/tv_subject_name" />
+
+            <TextView
+                android:id="@+id/tv_room"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="Phòng A301 - Tòa nhà A"
+                android:textColor="@color/purple_700"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@id/ic_location"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/ic_location"
+                app:layout_constraintTop_toTopOf="@id/ic_location" />
+
+            <ImageView
+                android:id="@+id/ic_teacher"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_marginTop="8dp"
+                android:src="@drawable/ic_profile"
+                app:tint="@color/purple_700"
+                app:layout_constraintStart_toStartOf="@id/tv_subject_name"
+                app:layout_constraintTop_toBottomOf="@id/ic_location" />
+
+            <TextView
+                android:id="@+id/tv_teacher"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="ThS. Nguyễn Văn A"
+                android:textColor="@color/purple_700"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@id/ic_teacher"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/ic_teacher"
+                app:layout_constraintTop_toTopOf="@id/ic_teacher" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

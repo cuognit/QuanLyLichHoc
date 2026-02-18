@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="12dp"
+    android:background="@drawable/bg_rounded_card"
+    android:elevation="2dp"
+    android:padding="16dp">
+
+    <ImageView
+        android:id="@+id/img_check"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/ic_radio_unchecked"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_task_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="8dp"
+        tools:text="Nộp bài tập Giải tích"
+        android:textColor="@color/text_title"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@id/tv_priority"
+        app:layout_constraintStart_toEndOf="@id/img_check"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_priority"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Cao"
+        android:paddingHorizontal="8dp"
+        android:paddingVertical="4dp"
+        android:background="@drawable/bg_priority_high"
+        android:textColor="#C62828"
+        android:textSize="10sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/ic_time"
+        android:layout_width="14dp"
+        android:layout_height="14dp"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/ic_time"
+        app:tint="@color/text_secondary"
+        app:layout_constraintStart_toStartOf="@id/tv_task_title"
+        app:layout_constraintTop_toBottomOf="@id/tv_task_title" />
+
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        tools:text="10:00"
+        android:textColor="@color/text_secondary"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@id/ic_time"
+        app:layout_constraintStart_toEndOf="@id/ic_time"
+        app:layout_constraintTop_toTopOf="@id/ic_time" />
+
+    <TextView
+        android:id="@+id/tv_divider"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="•"
+        android:textColor="@color/text_secondary"
+        app:layout_constraintBottom_toBottomOf="@id/tv_time"
+        app:layout_constraintStart_toEndOf="@id/tv_time"
+        app:layout_constraintTop_toTopOf="@id/tv_time" />
+
+    <ImageView
+        android:id="@+id/ic_subject"
+        android:layout_width="14dp"
+        android:layout_height="14dp"
+        android:layout_marginStart="8dp"
+        android:src="@drawable/ic_tasks"
+        app:tint="@color/text_secondary"
+        app:layout_constraintBottom_toBottomOf="@id/tv_time"
+        app:layout_constraintStart_toEndOf="@id/tv_divider"
+        app:layout_constraintTop_toTopOf="@id/tv_time" />
+
+    <TextView
+        android:id="@+id/tv_subject"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        tools:text="Toán Cao Cấp"
+        android:textColor="@color/text_secondary"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@id/ic_subject"
+        app:layout_constraintStart_toEndOf="@id/ic_subject"
+        app:layout_constraintTop_toTopOf="@id/ic_subject" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,5 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    
+    <!-- Pastel / Custom Colors -->
+    <color name="bg_main">#F9FAFB</color>
+    <color name="text_title">#111827</color>
+    <color name="text_subtitle">#6B7280</color>
+    <color name="text_secondary">#9CA3AF</color>
+    
+    <color name="pastel_purple_bg">#EEDDFF</color>
+    <color name="pastel_blue_bg">#DDEEFF</color>
+    <color name="pastel_green_bg">#DDFFDD</color>
+    <color name="pastel_orange_bg">#FFEEDD</color>
+    <color name="pastel_pink_bg">#FFDDEE</color>
+
+    <color name="pastel_purple_text">#7B1FA2</color>
+    <color name="pastel_blue_text">#1976D2</color>
+    <color name="pastel_green_text">#388E3C</color>
+    <color name="pastel_orange_text">#F57C00</color>
+    <color name="pastel_pink_text">#C2185B</color>
+    
+    <color name="blue_500">#1976D2</color>
+
 </resources>
