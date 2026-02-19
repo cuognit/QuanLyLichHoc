@@ -116,7 +116,7 @@ class TimelineAdapter(
             }
         }
         
-        holder.itemView.setOnClickListener {
+        holder.cardClass.setOnClickListener {
             onItemClick(item)
         }
     }

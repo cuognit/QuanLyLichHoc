@@ -70,18 +70,25 @@ class ExamsFragment : Fragment() {
 
     private fun updateTabState(isUpcoming: Boolean) {
         isUpcomingTab = isUpcoming
+        
+        val padding8dp = (8 * resources.displayMetrics.density).toInt()
+
         if (isUpcoming) {
             binding.tabUpcoming.setBackgroundResource(R.drawable.bg_tab_selected)
             binding.tabUpcoming.setTextColor(ContextCompat.getColor(requireContext(), R.color.blue_500))
+            binding.tabUpcoming.setPadding(0, padding8dp, 0, padding8dp)
             
-            binding.tabCompleted.background = null
+            binding.tabCompleted.setBackgroundResource(R.drawable.bg_tab_unselected)
             binding.tabCompleted.setTextColor(ContextCompat.getColor(requireContext(), R.color.text_secondary))
+            binding.tabCompleted.setPadding(0, padding8dp, 0, padding8dp)
         } else {
             binding.tabCompleted.setBackgroundResource(R.drawable.bg_tab_selected)
             binding.tabCompleted.setTextColor(ContextCompat.getColor(requireContext(), R.color.blue_500))
+            binding.tabCompleted.setPadding(0, padding8dp, 0, padding8dp)
             
-            binding.tabUpcoming.background = null
+            binding.tabUpcoming.setBackgroundResource(R.drawable.bg_tab_unselected)
             binding.tabUpcoming.setTextColor(ContextCompat.getColor(requireContext(), R.color.text_secondary))
+            binding.tabUpcoming.setPadding(0, padding8dp, 0, padding8dp)
         }
         filterAndDisplayExams()
     }

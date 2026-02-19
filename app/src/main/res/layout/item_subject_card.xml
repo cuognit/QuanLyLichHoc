@@ -7,7 +7,10 @@
     android:layout_marginVertical="8dp"
     app:cardCornerRadius="16dp"
     app:cardElevation="2dp"
-    app:cardBackgroundColor="@color/white">
+    app:cardBackgroundColor="@color/white"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?attr/selectableItemBackground">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -29,24 +32,13 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginEnd="16dp"
             android:text="Lập trình Web"
             android:textColor="@color/text_title"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@id/btn_more"
-            app:layout_constraintStart_toEndOf="@id/view_strip"
-            app:layout_constraintTop_toTopOf="parent" />
-            
-        <ImageView
-            android:id="@+id/btn_more"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:src="@drawable/ic_more_vert"
-            app:tint="@color/text_secondary"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/view_strip"
             app:layout_constraintTop_toTopOf="parent" />
 
         <!-- Teacher -->
@@ -122,6 +114,7 @@
             android:text="T2 (7:00 - 11:30)"
             android:textColor="@color/text_subtitle"
             android:textSize="14sp"
+            android:lineSpacingExtra="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/ic_time"

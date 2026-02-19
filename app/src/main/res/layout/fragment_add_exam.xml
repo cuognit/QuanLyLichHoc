@@ -36,15 +36,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/btn_more"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@drawable/ic_more_vert"
-            app:tint="#333333"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -69,11 +61,15 @@
                 android:textStyle="bold" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout_subject_select"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:background="#FFF5F5" 
-                android:padding="16dp">
+                android:padding="16dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground">
                 <!-- Using a light red background manually or define specific drawable if needed -->
 
                 <TextView
@@ -180,13 +176,17 @@
 
                 <!-- Date Picker -->
                 <LinearLayout
+                    android:id="@+id/layout_date"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:layout_marginEnd="8dp"
                     android:background="#F9FAFB"
                     android:orientation="vertical"
-                    android:padding="12dp">
+                    android:padding="12dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground">
                     
                     <TextView
                          android:layout_width="wrap_content"
@@ -222,13 +222,17 @@
 
                 <!-- Time Picker -->
                 <LinearLayout
+                    android:id="@+id/layout_time"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:layout_marginStart="8dp"
                     android:background="#F9FAFB"
                     android:orientation="vertical"
-                    android:padding="12dp">
+                    android:padding="12dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground">
                     
                      <TextView
                          android:layout_width="wrap_content"
@@ -271,13 +275,17 @@
 
                 <!-- Duration -->
                 <LinearLayout
+                    android:id="@+id/layout_duration"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:layout_marginEnd="8dp"
                     android:background="#F9FAFB"
                     android:orientation="vertical"
-                    android:padding="12dp">
+                    android:padding="12dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground">
                     
                      <LinearLayout
                         android:layout_width="match_parent"
@@ -285,7 +293,7 @@
                         android:orientation="horizontal"
                         android:gravity="center_vertical">
                         
-                         <ImageView
+                          <ImageView
                             android:layout_width="24dp"
                             android:layout_height="24dp"
                             android:src="@drawable/ic_timer"
@@ -307,7 +315,7 @@
                                 android:layout_height="wrap_content"
                                 android:orientation="horizontal"
                                 android:gravity="bottom">
-                                <TextView
+                                <EditText
                                     android:id="@+id/et_duration"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
@@ -315,6 +323,8 @@
                                     android:textColor="#333333"
                                     android:textSize="16sp"
                                     android:textStyle="bold"
+                                    android:inputType="number"
+                                    android:background="@null"
                                     android:layout_marginEnd="4dp"/>
                                 <TextView
                                     android:layout_width="wrap_content"
@@ -329,21 +339,25 @@
 
                 <!-- Room -->
                 <LinearLayout
+                    android:id="@+id/layout_room"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:layout_marginStart="8dp"
                     android:background="#F9FAFB"
                      android:padding="12dp"
-                     android:orientation="vertical">
+                     android:orientation="vertical"
+                     android:clickable="true"
+                     android:focusable="true"
+                     android:foreground="?attr/selectableItemBackground">
                     
-                     <LinearLayout
+                      <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:gravity="center_vertical">
                         
-                         <ImageView
+                          <ImageView
                             android:layout_width="24dp"
                             android:layout_height="24dp"
                             android:src="@drawable/ic_location"
@@ -360,14 +374,15 @@
                                 android:text="Phòng thi"
                                 android:textSize="10sp"
                                 android:textColor="#9E9E9E"/>
-                             <TextView
+                             <EditText
                                 android:id="@+id/et_room"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="B1-202"
                                 android:textColor="#333333"
                                 android:textSize="16sp"
-                                android:textStyle="bold"/>
+                                android:textStyle="bold"
+                                android:background="@null"/>
                         </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
@@ -375,13 +390,17 @@
 
             <!-- Pink Detail Box -->
             <LinearLayout
+                android:id="@+id/layout_sbd"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:background="@drawable/bg_pink_rounded"
                 android:orientation="horizontal"
                 android:padding="16dp"
-                android:gravity="center_vertical">
+                android:gravity="center_vertical"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground">
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -426,13 +445,17 @@
 
             <!-- Notes -->
             <LinearLayout
+                android:id="@+id/layout_note"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:background="#F9FAFB"
                 android:padding="12dp"
                 android:orientation="horizontal"
-                android:gravity="center_vertical">
+                android:gravity="center_vertical"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground">
                 
                 <ImageView
                     android:layout_width="20dp"

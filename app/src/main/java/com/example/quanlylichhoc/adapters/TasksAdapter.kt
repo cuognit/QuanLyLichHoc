@@ -15,13 +15,16 @@ sealed class TaskListItem {
         val time: String,
         val subject: String,
         val priority: String, // "Cao", "Trung bình", "Thấp"
-        val isCompleted: Boolean = false
+        val description: String = "",
+        val isCompleted: Boolean = false,
+        val isOverdue: Boolean = false
     ) : TaskListItem()
 }
 
 class TasksAdapter(
     private val items: List<TaskListItem>,
-    private val onTaskLongClick: (TaskListItem.TaskItem) -> Unit
+    private val onTaskLongClick: (TaskListItem.TaskItem) -> Unit,
+    private val onTaskStatusChange: (TaskListItem.TaskItem) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
@@ -49,7 +52,7 @@ class TasksAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (val item = items[position]) {
             is TaskListItem.Header -> (holder as HeaderViewHolder).bind(item)
-            is TaskListItem.TaskItem -> (holder as TaskViewHolder).bind(item, onTaskLongClick)
+            is TaskListItem.TaskItem -> (holder as TaskViewHolder).bind(item, onTaskLongClick, onTaskStatusChange)
         }
     }
 
@@ -67,11 +70,22 @@ class TasksAdapter(
         private val tvTime: TextView = view.findViewById(R.id.tv_time)
         private val tvSubject: TextView = view.findViewById(R.id.tv_subject)
         private val tvPriority: TextView = view.findViewById(R.id.tv_priority)
+        private val imgCheck: android.widget.ImageView = view.findViewById(R.id.img_check)
+        private val tvOverdue: TextView = view.findViewById(R.id.tv_overdue)
+        private val tvDesc: TextView = view.findViewById(R.id.tv_task_desc)
         
-        fun bind(task: TaskListItem.TaskItem, onLongClick: (TaskListItem.TaskItem) -> Unit) {
+        fun bind(task: TaskListItem.TaskItem, onLongClick: (TaskListItem.TaskItem) -> Unit, onStatusChange: (TaskListItem.TaskItem) -> Unit) {
             tvTitle.text = task.title
             tvTime.text = task.time
             tvSubject.text = task.subject
+            
+            if (task.description.isNullOrBlank()) {
+                tvDesc.visibility = View.GONE
+            } else {
+                tvDesc.visibility = View.VISIBLE
+                tvDesc.text = task.description.trim()
+                tvDesc.isSelected = true // For marquee
+            }
             
             // Priority Styling
             tvPriority.text = task.priority
@@ -92,6 +106,27 @@ class TasksAdapter(
                  else -> "#F9A825"
             }
             tvPriority.setTextColor(android.graphics.Color.parseColor(priorityColor))
+
+            // Check status
+            if (task.isCompleted) {
+                imgCheck.setImageResource(R.drawable.ic_check_circle) 
+                imgCheck.setColorFilter(android.graphics.Color.parseColor("#4CAF50")) // Green
+                tvOverdue.visibility = View.GONE
+            } else {
+                imgCheck.setImageResource(R.drawable.ic_radio_unchecked)
+                imgCheck.setColorFilter(android.graphics.Color.parseColor("#757575")) // Grey
+                
+                // Show overdue if applicable
+                if (task.isOverdue) {
+                     tvOverdue.visibility = View.VISIBLE
+                } else {
+                     tvOverdue.visibility = View.GONE
+                }
+            }
+
+            imgCheck.setOnClickListener {
+                onStatusChange(task)
+            }
 
             itemView.setOnLongClickListener {
                 onLongClick(task)

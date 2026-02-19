@@ -50,20 +50,60 @@ class AddExamFragment : Fragment() {
         }
         
         binding.tvDate.setOnClickListener {
-            val c = java.util.Calendar.getInstance()
-            android.app.DatePickerDialog(requireContext(), { _, y, m, d ->
-                selectedDate = String.format("%02d/%02d/%d", d, m + 1, y)
-                binding.tvDate.text = selectedDate
-            }, c.get(java.util.Calendar.YEAR), c.get(java.util.Calendar.MONTH), c.get(java.util.Calendar.DAY_OF_MONTH)).show()
+            pickDate()
+        }
+        binding.layoutDate.setOnClickListener {
+            pickDate()
         }
         
         binding.tvTime.setOnClickListener {
-            val c = java.util.Calendar.getInstance()
-            android.app.TimePickerDialog(requireContext(), { _, h, min ->
-                selectedTime = String.format("%02d:%02d", h, min)
-                binding.tvTime.text = selectedTime
-            }, c.get(java.util.Calendar.HOUR_OF_DAY), c.get(java.util.Calendar.MINUTE), true).show()
+            pickTime()
         }
+        binding.layoutTime.setOnClickListener {
+            pickTime()
+        }
+        
+        binding.layoutSubjectSelect.setOnClickListener {
+             binding.tvSubjectValue.performClick()
+        }
+        
+        binding.layoutDuration.setOnClickListener {
+            focusInput(binding.etDuration)
+        }
+        
+        binding.layoutRoom.setOnClickListener {
+            focusInput(binding.etRoom)
+        }
+        
+        binding.layoutSbd.setOnClickListener {
+            focusInput(binding.etSbd)
+        }
+        
+        binding.layoutNote.setOnClickListener {
+            focusInput(binding.etNote)
+        }
+    }
+    
+    private fun pickDate() {
+        val c = java.util.Calendar.getInstance()
+        android.app.DatePickerDialog(requireContext(), { _, y, m, d ->
+            selectedDate = String.format("%02d/%02d/%d", d, m + 1, y)
+            binding.tvDate.text = selectedDate
+        }, c.get(java.util.Calendar.YEAR), c.get(java.util.Calendar.MONTH), c.get(java.util.Calendar.DAY_OF_MONTH)).show()
+    }
+
+    private fun pickTime() {
+        val c = java.util.Calendar.getInstance()
+        android.app.TimePickerDialog(requireContext(), { _, h, min ->
+            selectedTime = String.format("%02d:%02d", h, min)
+            binding.tvTime.text = selectedTime
+        }, c.get(java.util.Calendar.HOUR_OF_DAY), c.get(java.util.Calendar.MINUTE), true).show()
+    }
+    
+    private fun focusInput(editText: android.widget.EditText) {
+        editText.requestFocus()
+        val imm = androidx.core.content.ContextCompat.getSystemService(requireContext(), android.view.inputmethod.InputMethodManager::class.java)
+        imm?.showSoftInput(editText, android.view.inputmethod.InputMethodManager.SHOW_IMPLICIT)
     }
     
     private fun setupSubjectSelection() {

@@ -7,7 +7,10 @@
     android:layout_marginBottom="12dp"
     android:background="@drawable/bg_rounded_card"
     android:elevation="2dp"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?attr/selectableItemBackground">
 
     <ImageView
         android:id="@+id/img_check"
@@ -45,6 +48,19 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_overdue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:text="Quá hạn"
+        android:textColor="#D32F2F"
+        android:textSize="9sp"
+        android:textStyle="bold"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_priority" />
 
     <ImageView
         android:id="@+id/ic_time"
@@ -101,5 +117,23 @@
         app:layout_constraintBottom_toBottomOf="@id/ic_subject"
         app:layout_constraintStart_toEndOf="@id/ic_subject"
         app:layout_constraintTop_toTopOf="@id/ic_subject" />
+
+    <TextView
+        android:id="@+id/tv_task_desc"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="12dp"
+        android:textColor="@color/text_secondary"
+        android:textSize="12sp"
+        android:singleLine="true"
+        android:ellipsize="marquee"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:scrollHorizontally="true"
+        android:fadingEdge="horizontal"
+        app:layout_constraintEnd_toStartOf="@id/tv_priority"
+        app:layout_constraintStart_toStartOf="@id/tv_task_title"
+        app:layout_constraintTop_toBottomOf="@id/ic_time"
+        tools:text="Mô tả nhiệm vụ hiển thị ở 1 dòng và tự chạy nếu dài..." />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

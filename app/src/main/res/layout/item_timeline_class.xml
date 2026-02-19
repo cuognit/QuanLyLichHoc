@@ -41,6 +41,9 @@
         app:cardCornerRadius="24dp"
         app:cardElevation="0dp"
         app:cardBackgroundColor="@color/pastel_purple_bg"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackground"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/tv_start_time"
         app:layout_constraintTop_toTopOf="parent">

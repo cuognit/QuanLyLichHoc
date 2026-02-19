@@ -20,7 +20,6 @@ class SubjectsAdapter(
         val tvTeacher: TextView = view.findViewById(R.id.tv_teacher)
         val tvRoom: TextView = view.findViewById(R.id.tv_room)
         val tvSchedule: TextView = view.findViewById(R.id.tv_schedule)
-        val btnMore: ImageView = view.findViewById(R.id.btn_more)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SubjectViewHolder {
@@ -46,9 +45,6 @@ class SubjectsAdapter(
         }
 
         holder.itemView.setOnClickListener { onSubjectClick(item) }
-        holder.btnMore.setOnClickListener { 
-            // Handle more options if needed
-        }
     }
 
     override fun getItemCount(): Int = subjects.size

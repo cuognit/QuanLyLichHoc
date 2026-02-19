@@ -70,37 +70,67 @@ class AddTaskFragment : DialogFragment() {
         binding.btnCancel.setOnClickListener { dismiss() }
 
         binding.btnSaveTask.setOnClickListener {
-            val taskName = binding.etTaskName.text.toString()
-            val taskDesc = binding.etTaskDesc.text.toString()
+            val taskName = binding.etTaskName.text.toString().trim()
+            val taskDesc = binding.etTaskDesc.text.toString().trim()
             
-            if (taskName.isBlank()) {
+            if (taskName.isEmpty()) {
                 Toast.makeText(context, "Vui lòng nhập tên nhiệm vụ", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
             
-            if (selectedDate.isEmpty()) selectedDate = "Hôm nay" // Default or validate
+            var deadline = selectedDate
+            if (deadline.isEmpty()) deadline = "Hôm nay" // Default
+            
+            if (selectedTime.isNotEmpty()) {
+                deadline += " $selectedTime"
+            }
             
             if (taskId == null) {
                 // Add
-                dbHelper.insertTask(selectedSubjectId, taskName, taskDesc, selectedPriority, selectedDate, false)
+                dbHelper.insertTask(selectedSubjectId, taskName, taskDesc, selectedPriority, deadline, false)
                 Toast.makeText(context, "Đã thêm nhiệm vụ: $taskName", Toast.LENGTH_SHORT).show()
             } else {
-                // Update
-                dbHelper.updateTask(taskId!!, taskName, taskDesc, selectedPriority, selectedDate)
+                // Update - keep existing completion status (not passed here but updateTask doesn't touch it so fine)
+                // Wait, updateTask signature? Let's check DatabaseHelper.
+                // It is: updateTask(id, title, desc, priority, deadline)
+                // It does NOT update subject_id currently. We should probably update subject_id too if changed.
+                // Let's assume user might change subject.
+                // I need to update updateTask in DB helper to accept subjectId or check if it does.
+                // Checking DB helper... updateTask signature is (id, title, desc, priority, deadline).
+                // It misses subjectId. I should add it or create a new method.
+                // For now, let's stick to existing and maybe add subject update if critical.
+                // The user asked to "edit task information", implying everything.
+                // I will add updateTask with subjectId.
+                dbHelper.updateTask(taskId!!, taskName, taskDesc, selectedPriority, deadline, selectedSubjectId)
                 Toast.makeText(context, "Đã cập nhật nhiệm vụ", Toast.LENGTH_SHORT).show()
             }
+
+            // Notify listener to refresh
+            parentFragmentManager.setFragmentResult("task_updated", android.os.Bundle().apply {
+                putBoolean("refresh", true)
+            })
+            
             dismiss()
         }
     }
     
     private fun setupSubjectSpinner() {
-        val subjectNames = dbHelper.getSubjectNames()
+        val subjectNames = ArrayList<String>()
+        subjectNames.add("Khác")
+        subjectNames.addAll(dbHelper.getSubjectNames())
+        
+        // Initial setup for default or edit mode
+        if (selectedSubjectId == -1L) {
+            binding.spinnerSubject.text = "Khác"
+        }
+
         binding.spinnerSubject.setOnClickListener {
             val popup = androidx.appcompat.widget.PopupMenu(requireContext(), it)
             subjectNames.forEach { name -> popup.menu.add(name) }
             popup.setOnMenuItemClickListener { item ->
-                binding.spinnerSubject.text = item.title
-                selectedSubjectId = dbHelper.getSubjectIdByName(item.title.toString())
+                val name = item.title.toString()
+                binding.spinnerSubject.text = name
+                selectedSubjectId = if (name == "Khác") -1L else dbHelper.getSubjectIdByName(name)
                 true
             }
             popup.show()
@@ -164,9 +194,45 @@ class AddTaskFragment : DialogFragment() {
         // For efficiency, I won't query all.
         // I will just set title based on bundle args for now if available, otherwise just ID.
         // To do it right: 
-        binding.etTaskName.setText(arguments?.getString("taskTitle"))
-        binding.etTaskDesc.setText(arguments?.getString("taskDesc"))
-        // Priority etc.
+        if (arguments?.containsKey("taskTitle") == true) binding.etTaskName.setText(arguments?.getString("taskTitle"))
+        if (arguments?.containsKey("taskDesc") == true) binding.etTaskDesc.setText(arguments?.getString("taskDesc"))
+        
+        // Priority
+        val priority = arguments?.getString("taskPriority")
+        if (priority != null) {
+            val btn = when(priority) {
+                "Cao" -> binding.btnPriorityHigh
+                "Thấp" -> binding.btnPriorityLow
+                else -> binding.btnPriorityMedium
+            }
+            btn.performClick()
+        }
+        
+        // Deadline
+        val deadline = arguments?.getString("taskDeadline") ?: ""
+        if (deadline.isNotEmpty() && deadline != "Không có hạn") {
+            try {
+                 // Format might be "dd/MM/yyyy" or "dd/MM/yyyy HH:mm"
+                 val parts = deadline.split(" ")
+                 selectedDate = parts[0]
+                 binding.tvDeadlineDate.text = selectedDate
+                 
+                 if (parts.size > 1) {
+                     selectedTime = parts[1]
+                     binding.tvDeadlineTime.text = selectedTime
+                 }
+            } catch (e: Exception) {}
+        }
+        
+        // Subject
+        val sId = arguments?.getLong("taskSubjectId", -1) ?: -1
+        if (sId != -1L) {
+            selectedSubjectId = sId
+            val subject = dbHelper.getSubjectById(sId.toString())
+            if (subject != null) {
+                binding.spinnerSubject.text = subject.name
+            }
+        }
     }
 
     override fun onDestroyView() {

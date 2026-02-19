@@ -23,7 +23,8 @@ class TaskCardView @JvmOverloads constructor(
     fun setData(item: TaskItem) {
         with(binding) {
             tvTaskTitle.text = item.title
-            tvTaskDesc.text = item.description
+            tvTaskDesc.text = item.description.trim()
+            tvTaskDesc.isSelected = true // Enable marquee
             chipPriority.text = item.deadline
             cbComplete.isChecked = item.isCompleted
             

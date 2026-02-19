@@ -22,7 +22,8 @@ data class TaskItem(
     val description: String,
     val priority: String, // "Cao", "Trung bình", "Thấp"
     val isCompleted: Boolean = false,
-    val deadline: String = "Hôm nay"
+    val deadline: String = "Hôm nay",
+    val subjectId: Long = -1 // Added for DB mapping
 )
 
 data class ExamItem(
