@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#F6F7FB">
+    android:background="@color/bg_main">
 
     <!-- ===== HEADER ===== -->
     <LinearLayout
@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:padding="16dp"
-        android:background="#FFFFFF"
+        android:background="@color/card_bg"
         android:gravity="center_vertical">
 
         <ImageView
@@ -56,7 +56,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:background="#FFFFFF"
+                android:background="@color/card_bg"
                 android:padding="24dp"
                 android:gravity="center">
 
@@ -165,7 +165,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="#F0F0F0"
+                    android:background="@color/divider_color"
                     android:layout_marginStart="56dp"/>
 
                 <!-- Đổi mật khẩu -->
@@ -261,7 +261,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="#F0F0F0"
+                    android:background="@color/divider_color"
                     android:layout_marginStart="56dp"/>
 
                 <!-- Chế độ tối -->
@@ -300,7 +300,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="#F0F0F0"
+                    android:background="@color/divider_color"
                     android:layout_marginStart="56dp"/>
 
                 <!-- Ngôn ngữ -->
@@ -458,7 +458,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="#F0F0F0"
+                    android:background="@color/divider_color"
                     android:layout_marginStart="56dp"/>
 
                 <!-- Điều khoản -->
@@ -506,7 +506,7 @@
                 android:padding="16dp"
                 android:layout_marginTop="16dp"
                 android:gravity="center"
-                android:background="#FFFFFF"
+                android:background="@color/card_bg"
                 android:clickable="true"
                 android:focusable="true"
                 android:foreground="?attr/selectableItemBackground">

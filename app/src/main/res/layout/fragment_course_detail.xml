@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F8F9FD">
+    android:background="@color/bg_main">
 
     <!-- Header / Top Bar -->
     <ImageView
@@ -173,7 +173,7 @@
                     android:backgroundTint="#E3F2FD"
                     android:padding="6dp"
                     android:src="@drawable/ic_profile"
-                    app:tint="#2196F3"
+                    app:tint="@color/purple_500"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -419,7 +419,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:padding="16dp"
-        android:background="#FFFFFF"
+        android:background="@color/card_bg"
         android:elevation="16dp"
         app:layout_constraintBottom_toBottomOf="parent">
 

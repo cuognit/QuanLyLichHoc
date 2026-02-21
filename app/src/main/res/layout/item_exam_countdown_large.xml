@@ -8,6 +8,7 @@
     android:background="@drawable/bg_rounded_card"
     android:padding="16dp"
     android:elevation="2dp"
+    android:clipToOutline="true"
     android:clickable="true"
     android:focusable="true"
     android:foreground="?attr/selectableItemBackground">
@@ -17,11 +18,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/bg_tag_white"
-        android:backgroundTint="#E3F2FD"
+        android:backgroundTint="#33FFFFFF"
         android:paddingHorizontal="8dp"
         android:paddingVertical="4dp"
         android:text="Thi cuối kỳ"
-        android:textColor="#1976D2"
+        android:textColor="@color/white"
         android:textSize="10sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -31,10 +32,11 @@
         android:id="@+id/img_calendar_icon"
         android:layout_width="24dp"
         android:layout_height="24dp"
-        android:background="@drawable/bg_add_button"
+        android:background="@drawable/bg_rounded_card"
+        android:backgroundTint="#33FFFFFF"
         android:padding="4dp"
         android:src="@drawable/ic_calendar_purple"
-        app:tint="#1976D2" 
+        app:tint="@color/white" 
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -87,7 +89,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="16dp"
-        android:background="#F3F4F6"
+        android:background="@color/divider_color"
         app:layout_constraintTop_toBottomOf="@id/container_countdown" />
 
     <LinearLayout
@@ -97,29 +99,79 @@
         android:orientation="horizontal"
         app:layout_constraintTop_toBottomOf="@id/divider">
 
-        <TextView
-            android:id="@+id/tv_room"
-            android:layout_width="0dp"
-            android:layout_weight="1"
+        <!-- Room -->
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawablePadding="8dp"
-            android:text="Phòng\n302"
-            android:textColor="@color/text_title"
-            android:textSize="12sp"
-            android:textStyle="bold"
-            app:drawableStartCompat="@drawable/ic_location" />
+            android:layout_marginEnd="16dp"
+            android:gravity="center"
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/tv_id"
-            android:layout_width="0dp"
-            android:layout_weight="1"
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_location"
+                app:tint="?attr/colorPrimary" />
+
+            <TextView
+                android:id="@+id/tv_room"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text="302"
+                android:textColor="@color/text_title"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <!-- SBD -->
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawablePadding="8dp"
-            android:text="Số báo danh\n84"
-            android:textColor="@color/text_title"
-            android:textSize="12sp"
-            android:textStyle="bold"
-            app:drawableStartCompat="@drawable/ic_exams" />
+            android:layout_marginEnd="16dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_exams"
+                app:tint="?attr/colorPrimary" />
+
+            <TextView
+                android:id="@+id/tv_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text="84"
+                android:textColor="@color/text_title"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <!-- Duration -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_timer"
+                app:tint="?attr/colorPrimary" />
+
+            <TextView
+                android:id="@+id/tv_duration_large"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text="90 phút"
+                android:textColor="@color/text_title"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+        </LinearLayout>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

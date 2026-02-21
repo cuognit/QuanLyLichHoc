@@ -31,6 +31,8 @@ class AddExamFragment : Fragment() {
     private var selectedTime = ""
     private var selectedType = "Cuối kỳ"
 
+    private var examId: String? = null
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         dbHelper = com.example.quanlylichhoc.database.DatabaseHelper(requireContext())
@@ -38,6 +40,58 @@ class AddExamFragment : Fragment() {
         setupActions()
         setupChipSelection()
         setupSubjectSelection()
+        
+        // Default UI State
+        binding.etDuration.setText("") 
+        binding.etRoom.setText("")
+
+        // Check for Edit Mode
+        arguments?.getString("exam_id")?.let { id ->
+            examId = id
+            setupEditMode(id)
+        }
+    }
+
+    private fun setupEditMode(id: String) {
+        val exam = dbHelper.getExamById(id) ?: return
+        
+        // Update Header and Button
+        val titleView = binding.header.findViewById<TextView>(R.id.header_title)
+        titleView?.text = "Chỉnh sửa lịch thi"
+        
+        binding.btnSaveExam.text = "Cập nhật"
+        
+        // Populate Data
+        selectedSubjectId = exam.subjectId
+        selectedType = exam.type
+        selectedDate = exam.date
+        selectedTime = exam.time
+        
+        // Subject Name
+        val subject = dbHelper.getSubjectById(exam.subjectId.toString())
+        binding.tvSubjectValue.text = subject?.name ?: "Unknown"
+        
+        // Chips
+        val chips = listOf(binding.chipFinal, binding.chipMidterm, binding.chipTest, binding.chipOral, binding.chipOther)
+        chips.forEach { c ->
+            if (c.text.toString() == selectedType) {
+                c.performClick()
+            }
+        }
+        
+        // Date & Time
+        binding.tvDate.text = selectedDate
+        binding.tvTime.text = selectedTime
+        
+        // Duration, Room, SBD, Note
+        binding.etDuration.setText(exam.duration.toString())
+        binding.etRoom.setText(exam.room)
+        binding.etSbd.setText(exam.sbd)
+        binding.etNote.setText(exam.note)
+        
+        // Checkbox & Switch
+        binding.cbMaterials.isChecked = exam.isMaterialAllowed
+        binding.switchReminder.isChecked = exam.hasReminder
     }
 
     private fun setupActions() {
@@ -86,6 +140,15 @@ class AddExamFragment : Fragment() {
     
     private fun pickDate() {
         val c = java.util.Calendar.getInstance()
+        // Parse existing date if available
+        if (selectedDate.isNotEmpty()) {
+            try {
+                val sdf = java.text.SimpleDateFormat("dd/MM/yyyy", java.util.Locale.getDefault())
+                val d = sdf.parse(selectedDate)
+                if (d != null) c.time = d
+            } catch (e: Exception) {}
+        }
+        
         android.app.DatePickerDialog(requireContext(), { _, y, m, d ->
             selectedDate = String.format("%02d/%02d/%d", d, m + 1, y)
             binding.tvDate.text = selectedDate
@@ -94,6 +157,16 @@ class AddExamFragment : Fragment() {
 
     private fun pickTime() {
         val c = java.util.Calendar.getInstance()
+        if (selectedTime.isNotEmpty()) {
+             try {
+                val parts = selectedTime.split(":")
+                if (parts.size == 2) {
+                    c.set(java.util.Calendar.HOUR_OF_DAY, parts[0].toInt())
+                    c.set(java.util.Calendar.MINUTE, parts[1].toInt())
+                }
+            } catch (e: Exception) {}
+        }
+        
         android.app.TimePickerDialog(requireContext(), { _, h, min ->
             selectedTime = String.format("%02d:%02d", h, min)
             binding.tvTime.text = selectedTime
@@ -114,9 +187,6 @@ class AddExamFragment : Fragment() {
             popup.setOnMenuItemClickListener { item ->
                 binding.tvSubjectValue.text = item.title
                 selectedSubjectId = dbHelper.getSubjectIdByName(item.title.toString())
-                
-                // Auto-fill room if needed from subject defaults?
-                // For now keep manual or default
                 true
             }
             popup.show()
@@ -125,7 +195,9 @@ class AddExamFragment : Fragment() {
     }
 
     private fun setupChipSelection() {
-        val chips = listOf(binding.chipFinal, binding.chipMidterm, binding.chipTest, binding.chipOral)
+        val chips = listOf(binding.chipFinal, binding.chipMidterm, binding.chipTest, binding.chipOral, binding.chipOther)
+        
+        // Select "Cuối kỳ" by default behavior (first click or manual set)
         
         for (chip in chips) {
             chip.setOnClickListener {
@@ -137,7 +209,7 @@ class AddExamFragment : Fragment() {
                 }
                 
                 // Set selected
-                chip.setBackgroundResource(R.drawable.bg_chip_selected_red)
+                chip.setBackgroundResource(R.drawable.bg_chip_selected_purple)
                 chip.setTextColor(Color.WHITE)
                 chip.typeface = android.graphics.Typeface.DEFAULT_BOLD
                 selectedType = chip.text.toString()
@@ -164,10 +236,17 @@ class AddExamFragment : Fragment() {
         val room = binding.etRoom.text.toString()
         val sbd = binding.etSbd.text.toString()
         val note = binding.etNote.text.toString()
+        val isMaterialAllowed = binding.cbMaterials.isChecked
+        val hasReminder = binding.switchReminder.isChecked
         
-        dbHelper.insertExam(selectedSubjectId, selectedType, selectedDate, selectedTime, duration, room, sbd, note)
-        
-        Toast.makeText(context, "Đã lưu lịch thi thành công!", Toast.LENGTH_SHORT).show()
+        if (examId != null) {
+            dbHelper.updateExam(examId!!, selectedSubjectId, selectedType, selectedDate, selectedTime, duration, room, sbd, note, isMaterialAllowed, hasReminder)
+            Toast.makeText(context, "Đã cập nhật lịch thi!", Toast.LENGTH_SHORT).show()
+        } else {
+            dbHelper.insertExam(selectedSubjectId, selectedType, selectedDate, selectedTime, duration, room, sbd, note, isMaterialAllowed, hasReminder)
+            Toast.makeText(context, "Đã lưu lịch thi thành công!", Toast.LENGTH_SHORT).show()
+        }
+
         parentFragmentManager.popBackStack()
     }
 

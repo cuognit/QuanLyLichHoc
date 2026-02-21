@@ -48,7 +48,7 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:background="@drawable/bg_add_button"
-                android:backgroundTint="#8B5CF6"
+                android:backgroundTint="?attr/colorPrimary"
                 app:layout_constraintBottom_toBottomOf="@id/img_avatar"
                 app:layout_constraintEnd_toEndOf="@id/img_avatar" />
 
@@ -77,38 +77,8 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/img_avatar" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="thi.nguyen@example.com"
-                android:textColor="@color/text_secondary"
-                android:textSize="12sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_user_name" />
-
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <!-- Account Section -->
-        <TextView
-            style="@style/SettingsSectionHeader"
-            android:text="TÀI KHOẢN" />
-
-        <LinearLayout
-            style="@style/SettingsGroupCard">
-
-            <include
-                layout="@layout/item_setting_row"
-                android:id="@+id/row_personal_info" />
-            
-            <View style="@style/SettingsDivider" />
-
-            <include
-                layout="@layout/item_setting_row"
-                android:id="@+id/row_change_password" />
-        </LinearLayout>
-        
         <!-- App Section -->
         <TextView
             style="@style/SettingsSectionHeader"
@@ -118,7 +88,7 @@
             style="@style/SettingsGroupCard">
              <include
                 layout="@layout/item_setting_row"
-                android:id="@+id/row_notifications" />
+                android:id="@+id/row_theme" />
 
             <View style="@style/SettingsDivider" />
             
@@ -160,26 +130,6 @@
                 layout="@layout/item_setting_row"
                 android:id="@+id/row_policy" />
         </LinearLayout>
-
-        <!-- Logout Button -->
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_logout"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:layout_marginHorizontal="24dp"
-            android:layout_marginTop="32dp"
-            android:text="Đăng xuất"
-            android:textColor="#EF4444"
-            android:textStyle="bold"
-            app:icon="@drawable/ic_logout"
-            app:iconTint="#EF4444"
-            app:iconGravity="textStart"
-            android:backgroundTint="@color/white"
-            app:cornerRadius="16dp"
-            app:strokeColor="#FEE2E2"
-            app:strokeWidth="1dp"
-            android:elevation="2dp"
-            android:stateListAnimator="@null"/>
 
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

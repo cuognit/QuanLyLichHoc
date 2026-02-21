@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F4F6FB">
+    android:background="@color/bg_main">
 
     <!-- ===== HEADER ===== -->
     <LinearLayout
@@ -32,7 +32,7 @@
             android:text="Lịch học"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:textColor="#1A1A2E"/>
+            android:textColor="@color/text_main"/>
 
         <!-- Search icon -->
         <ImageView
@@ -78,7 +78,7 @@
             android:text="Tháng 10, 2023"
             android:textSize="15sp"
             android:textStyle="bold"
-            android:textColor="#1A1A2E"/>
+            android:textColor="@color/text_main"/>
 
         <ImageView
             android:layout_width="20dp"
@@ -524,7 +524,7 @@
                 <View
                     android:layout_width="4dp"
                     android:layout_height="match_parent"
-                    android:background="#E65100"
+                    android:background="@color/divider_color"
                     android:layout_marginEnd="10dp"/>
 
                 <androidx.cardview.widget.CardView

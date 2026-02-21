@@ -55,9 +55,12 @@ class CalendarAdapter(
 
         val context = holder.itemView.context
         if (item.isSelected) {
-            holder.tvDate.setBackgroundResource(R.drawable.circle_purple)
+            holder.tvDate.setBackgroundResource(R.drawable.circle_theme)
             holder.tvDate.setTextColor(androidx.core.content.ContextCompat.getColor(context, R.color.white))
-            holder.tvDayOfWeek.setTextColor(androidx.core.content.ContextCompat.getColor(context, R.color.purple_700))
+            
+            val typedValue = android.util.TypedValue()
+            context.theme.resolveAttribute(R.attr.colorPrimary, typedValue, true)
+            holder.tvDayOfWeek.setTextColor(typedValue.data)
         } else {
             holder.tvDate.background = null
             holder.tvDate.setTextColor(androidx.core.content.ContextCompat.getColor(context, R.color.text_title))

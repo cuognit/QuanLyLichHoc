@@ -39,8 +39,38 @@ class ScheduleCardView @JvmOverloads constructor(
                 tvTag.text = "Lý thuyết"
             }
 
-            // Logic for Image (Can be expanded later)
-            imgSubject.setImageResource(com.example.quanlylichhoc.R.drawable.bg_subject_math) 
+            // Apply Theme Gradient to card header
+            imgSubject.setImageResource(com.example.quanlylichhoc.R.drawable.bg_gradient_theme)
+            
+            // Resolve tag colors from theme
+            val typedValue = android.util.TypedValue()
+            context.theme.resolveAttribute(com.example.quanlylichhoc.R.attr.colorTagText, typedValue, true)
+            tvTag.setTextColor(typedValue.data)
+            
+            context.theme.resolveAttribute(com.example.quanlylichhoc.R.attr.colorTagBg, typedValue, true)
+            tvTag.backgroundTintList = android.content.res.ColorStateList.valueOf(typedValue.data)
+
+            // Ongoing logic
+            if (item.isToday) {
+                try {
+                    val sdf = java.text.SimpleDateFormat("HH:mm", java.util.Locale.getDefault())
+                    val now = java.util.Calendar.getInstance()
+                    val currentTime = sdf.parse(String.format("%02d:%02d", now.get(java.util.Calendar.HOUR_OF_DAY), now.get(java.util.Calendar.MINUTE)))
+                    val start = sdf.parse(item.startTime)
+                    val end = sdf.parse(item.endTime)
+                    
+                    if (currentTime != null && start != null && end != null && 
+                        currentTime.compareTo(start) >= 0 && currentTime.compareTo(end) <= 0) {
+                        tvOngoingBadge.visibility = android.view.View.VISIBLE
+                    } else {
+                        tvOngoingBadge.visibility = android.view.View.GONE
+                    }
+                } catch (e: Exception) {
+                    tvOngoingBadge.visibility = android.view.View.GONE
+                }
+            } else {
+                tvOngoingBadge.visibility = android.view.View.GONE
+            }
         }
     }
 }

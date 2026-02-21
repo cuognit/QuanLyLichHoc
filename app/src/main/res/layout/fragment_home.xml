@@ -18,12 +18,12 @@
             android:layout_marginStart="24dp"
             android:layout_marginTop="32dp"
             android:layout_marginEnd="16dp"
-            android:text="Chào buổi sáng, Thi"
+            android:text="Chào, Thi"
+            android:textColor="@color/text_title"
             android:textSize="24sp"
             android:textStyle="bold"
-            android:textColor="@color/text_title"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/img_avatar"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
@@ -69,6 +69,7 @@
             android:layout_marginEnd="24dp"
             android:text="Xem tất cả"
             android:textColor="@color/purple_500"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@id/tv_section_schedule"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/tv_section_schedule" />
@@ -129,9 +130,15 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"/>
 
-             <include 
-                android:id="@+id/card_exam_countdown"
-                layout="@layout/item_exam_card"/>
+              <androidx.recyclerview.widget.RecyclerView
+                 android:id="@+id/rv_exams"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:paddingHorizontal="8dp"
+                 android:clipToPadding="false"
+                 android:orientation="horizontal"
+                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                 tools:listitem="@layout/item_exam_card"/>
          </LinearLayout>
 
 
@@ -156,9 +163,8 @@
             android:layout_marginEnd="24dp"
             android:gravity="center"
             android:background="@drawable/bg_rounded_card"
-            android:backgroundTint="@color/pastel_blue_bg"
-            android:text="2"
-            android:textColor="@color/pastel_blue_text"
+            android:backgroundTint="?attr/colorPrimary"
+            android:textColor="@color/white"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="@id/tv_section_tasks"
             app:layout_constraintEnd_toEndOf="parent"

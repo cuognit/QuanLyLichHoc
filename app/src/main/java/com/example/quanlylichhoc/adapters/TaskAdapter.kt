@@ -5,7 +5,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.quanlylichhoc.ui.custom.TaskCardView
 import com.example.quanlylichhoc.utils.TaskItem
 
-class TaskAdapter(private val tasks: List<TaskItem>) : RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
+class TaskAdapter(
+    private val tasks: List<TaskItem>,
+    private val onTaskStatusChanged: (TaskItem, Boolean) -> Unit
+) : RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
 
     class TaskViewHolder(val view: TaskCardView) : RecyclerView.ViewHolder(view)
 
@@ -16,7 +19,7 @@ class TaskAdapter(private val tasks: List<TaskItem>) : RecyclerView.Adapter<Task
 
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
         val item = tasks[position]
-        holder.view.setData(item)
+        holder.view.setData(item, onTaskStatusChanged)
     }
 
     override fun getItemCount(): Int = tasks.size

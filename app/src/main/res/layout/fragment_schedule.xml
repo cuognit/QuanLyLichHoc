@@ -24,7 +24,7 @@
             android:layout_marginStart="24dp"
             android:layout_marginTop="24dp"
             android:src="@drawable/ic_calendar_purple"
-            android:background="@drawable/circle_purple_light"
+            android:background="@drawable/bg_circle_theme_light"
             android:padding="8dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -138,7 +138,7 @@
                 android:layout_width="40dp"
                 android:layout_height="4dp"
                 android:layout_gravity="center"
-                android:background="#E5E7EB"
+                android:background="@color/divider_color"
                 android:backgroundTint="#E0E0E0" />
         </FrameLayout>
 
@@ -188,7 +188,7 @@
                 android:paddingHorizontal="12dp"
                 android:paddingVertical="6dp"
                 android:background="@drawable/bg_rounded_card"
-                android:backgroundTint="#F3F4F6"
+                android:backgroundTint="@color/bg_secondary"
                 android:textColor="@color/text_subtitle"
                 android:textSize="12sp"
                 android:textStyle="bold"
@@ -231,7 +231,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="24dp"
         android:src="@drawable/ic_add_black_24dp"
-        android:backgroundTint="@color/purple_500"
+        android:backgroundTint="?attr/colorPrimary"
         app:tint="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />

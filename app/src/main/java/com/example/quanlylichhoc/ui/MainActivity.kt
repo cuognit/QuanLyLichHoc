@@ -7,22 +7,45 @@ import com.example.quanlylichhoc.R
 import com.example.quanlylichhoc.databinding.ActivityMainBinding
 import com.example.quanlylichhoc.ui.fragments.ExamsFragment
 import com.example.quanlylichhoc.ui.fragments.HomeFragment
+import com.example.quanlylichhoc.ui.fragments.OnboardingFragment
 import com.example.quanlylichhoc.ui.fragments.ProfileFragment
 import com.example.quanlylichhoc.ui.fragments.ScheduleFragment
 import com.example.quanlylichhoc.ui.fragments.TasksFragment
+import android.content.Context
+import android.view.View
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        val prefs = getSharedPreferences("AppPrefs", Context.MODE_PRIVATE)
+        val currentTheme = prefs.getString("app_theme", "purple")
+        when (currentTheme) {
+            "blue" -> setTheme(R.style.Theme_QuanLyLichHoc_Blue)
+            "pink" -> setTheme(R.style.Theme_QuanLyLichHoc_Pink)
+            "orange" -> setTheme(R.style.Theme_QuanLyLichHoc_Orange)
+            "green" -> setTheme(R.style.Theme_QuanLyLichHoc_Green)
+            "teal" -> setTheme(R.style.Theme_QuanLyLichHoc_Teal)
+            else -> setTheme(R.style.Theme_QuanLyLichHoc)
+        }
+        
         super.onCreate(savedInstanceState)
+        
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        // Load default fragment
+        
+        // Load default fragment or Onboarding
         if (savedInstanceState == null) {
-            loadFragment(HomeFragment())
+            val isOnboardingCompleted = prefs.getBoolean("onboarding_completed", false)
+
+            if (!isOnboardingCompleted) {
+                showBottomNav(false)
+                loadFragment(OnboardingFragment())
+            } else {
+                showBottomNav(true)
+                loadFragment(HomeFragment())
+            }
         }
 
         // Initialize Database and verify data
@@ -47,11 +70,26 @@ class MainActivity : AppCompatActivity() {
             loadFragment(fragment)
             true
         }
+
+        requestNotificationPermission()
+        com.example.quanlylichhoc.utils.NotificationHelper.scheduleDailySummary(this)
+    }
+
+    private fun requestNotificationPermission() {
+        if (android.os.Build.VERSION.SDK_INT >= 33) {
+            if (checkSelfPermission(android.Manifest.permission.POST_NOTIFICATIONS) != android.content.pm.PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(arrayOf(android.Manifest.permission.POST_NOTIFICATIONS), 101)
+            }
+        }
     }
 
     private fun loadFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragment_container, fragment)
             .commit()
+    }
+
+    fun showBottomNav(show: Boolean) {
+        binding.bottomNavigation.visibility = if (show) View.VISIBLE else View.GONE
     }
 }

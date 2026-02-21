@@ -33,7 +33,9 @@ data class ExamItem(
     val time: String,
     val type: String,
     val room: String,
-    val sbd: String
+    val sbd: String,
+    val duration: Int,
+    val note: String = ""
 )
 
 object MockData {

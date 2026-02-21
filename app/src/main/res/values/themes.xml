@@ -5,5 +5,62 @@
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
 
-    <style name="Theme.QuanLyLichHoc" parent="Base.Theme.QuanLyLichHoc" />
+    <style name="Theme.QuanLyLichHoc" parent="Base.Theme.QuanLyLichHoc">
+        <item name="colorPrimary">@color/purple_500</item>
+        <item name="colorGradientStart">#9C27B0</item>
+        <item name="colorGradientEnd">#673AB7</item>
+        <item name="colorTagBg">#33FFFFFF</item>
+        <item name="colorTagText">@color/white</item>
+        <item name="colorAccentLight">@color/pastel_purple_bg</item>
+    </style>
+
+    <style name="Theme.QuanLyLichHoc.Blue" parent="Base.Theme.QuanLyLichHoc">
+        <item name="colorPrimary">@color/blue_500</item>
+        <item name="colorPrimaryVariant">@color/blue_700</item>
+        <item name="colorGradientStart">#3B82F6</item>
+        <item name="colorGradientEnd">#1D4ED8</item>
+        <item name="colorTagBg">#33FFFFFF</item>
+        <item name="colorTagText">@color/white</item>
+        <item name="colorAccentLight">@color/pastel_blue_bg</item>
+    </style>
+
+    <style name="Theme.QuanLyLichHoc.Pink" parent="Base.Theme.QuanLyLichHoc">
+        <item name="colorPrimary">@color/pink_500</item>
+        <item name="colorPrimaryVariant">@color/pink_700</item>
+        <item name="colorGradientStart">#EC4899</item>
+        <item name="colorGradientEnd">#BE185D</item>
+        <item name="colorTagBg">#33FFFFFF</item>
+        <item name="colorTagText">@color/white</item>
+        <item name="colorAccentLight">@color/pastel_pink_bg</item>
+    </style>
+
+    <style name="Theme.QuanLyLichHoc.Orange" parent="Base.Theme.QuanLyLichHoc">
+        <item name="colorPrimary">@color/theme_orange_500</item>
+        <item name="colorPrimaryVariant">@color/theme_orange_700</item>
+        <item name="colorGradientStart">#F59E0B</item>
+        <item name="colorGradientEnd">#D97706</item>
+        <item name="colorTagBg">#33FFFFFF</item>
+        <item name="colorTagText">@color/white</item>
+        <item name="colorAccentLight">@color/theme_pastel_orange_bg</item>
+    </style>
+
+    <style name="Theme.QuanLyLichHoc.Green" parent="Base.Theme.QuanLyLichHoc">
+        <item name="colorPrimary">@color/theme_green_500</item>
+        <item name="colorPrimaryVariant">@color/theme_green_700</item>
+        <item name="colorGradientStart">#10B981</item>
+        <item name="colorGradientEnd">#059669</item>
+        <item name="colorTagBg">#33FFFFFF</item>
+        <item name="colorTagText">@color/white</item>
+        <item name="colorAccentLight">@color/theme_pastel_green_bg</item>
+    </style>
+
+    <style name="Theme.QuanLyLichHoc.Teal" parent="Base.Theme.QuanLyLichHoc">
+        <item name="colorPrimary">@color/theme_teal_500</item>
+        <item name="colorPrimaryVariant">@color/theme_teal_700</item>
+        <item name="colorGradientStart">#14B8A6</item>
+        <item name="colorGradientEnd">#0D9488</item>
+        <item name="colorTagBg">#33FFFFFF</item>
+        <item name="colorTagText">@color/white</item>
+        <item name="colorAccentLight">@color/theme_pastel_teal_bg</item>
+    </style>
 </resources>

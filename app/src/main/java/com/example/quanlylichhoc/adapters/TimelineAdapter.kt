@@ -69,7 +69,27 @@ class TimelineAdapter(
             holder.itemView.findViewById<ImageView>(R.id.ic_location).setColorFilter(colorInt)
             holder.itemView.findViewById<ImageView>(R.id.ic_teacher).setColorFilter(colorInt)
 
-            holder.tvStatus.visibility = View.GONE
+            // Ongoing logic
+            if (item.isToday) {
+                try {
+                    val sdf = java.text.SimpleDateFormat("HH:mm", java.util.Locale.getDefault())
+                    val now = java.util.Calendar.getInstance()
+                    val currentTime = sdf.parse(String.format("%02d:%02d", now.get(java.util.Calendar.HOUR_OF_DAY), now.get(java.util.Calendar.MINUTE)))
+                    val start = sdf.parse(item.startTime)
+                    val end = sdf.parse(item.endTime)
+                    
+                    if (currentTime != null && start != null && end != null && 
+                        currentTime.compareTo(start) >= 0 && currentTime.compareTo(end) <= 0) {
+                        holder.tvStatus.visibility = View.VISIBLE
+                    } else {
+                        holder.tvStatus.visibility = View.GONE
+                    }
+                } catch (e: Exception) {
+                    holder.tvStatus.visibility = View.GONE
+                }
+            } else {
+                holder.tvStatus.visibility = View.GONE
+            }
             
         } catch (e: Exception) {
              // Fallback

@@ -1,0 +1,541 @@
+﻿> Task :app:preBuild UP-TO-DATE
+> Task :app:preDebugBuild UP-TO-DATE
+> Task :app:mergeDebugNativeDebugMetadata NO-SOURCE
+> Task :app:checkKotlinGradlePluginConfigurationErrors
+> Task :app:dataBindingMergeDependencyArtifactsDebug UP-TO-DATE
+> Task :app:generateDebugResValues UP-TO-DATE
+> Task :app:generateDebugResources
+> Task :app:packageDebugResources
+> Task :app:mergeDebugResources
+> Task :app:processDebugNavigationResources
+> Task :app:checkDebugAarMetadata UP-TO-DATE
+> Task :app:compileDebugNavigationResources UP-TO-DATE
+> Task :app:mapDebugSourceSetPaths
+> Task :app:createDebugCompatibleScreenManifests UP-TO-DATE
+> Task :app:extractDeepLinksDebug UP-TO-DATE
+> Task :app:processDebugMainManifest
+> Task :app:processDebugManifest
+> Task :app:javaPreCompileDebug UP-TO-DATE
+> Task :app:mergeDebugShaders UP-TO-DATE
+> Task :app:compileDebugShaders NO-SOURCE
+> Task :app:generateDebugAssets UP-TO-DATE
+> Task :app:mergeDebugAssets UP-TO-DATE
+> Task :app:parseDebugLocalResources
+> Task :app:compressDebugAssets UP-TO-DATE
+> Task :app:dataBindingGenBaseClassesDebug
+> Task :app:checkDebugDuplicateClasses UP-TO-DATE
+> Task :app:desugarDebugFileDependencies UP-TO-DATE
+> Task :app:mergeExtDexDebug UP-TO-DATE
+> Task :app:mergeLibDexDebug UP-TO-DATE
+> Task :app:mergeDebugJniLibFolders UP-TO-DATE
+> Task :app:mergeDebugNativeLibs NO-SOURCE
+> Task :app:stripDebugDebugSymbols NO-SOURCE
+> Task :app:validateSigningDebug UP-TO-DATE
+> Task :app:writeDebugAppMetadata UP-TO-DATE
+> Task :app:writeDebugSigningConfigVersions UP-TO-DATE
+> Task :app:processDebugManifestForPackage
+> Task :app:processDebugResources
+
+> Task :app:compileDebugKotlin FAILED
+./gradlew : e: file:///C:/Users/Leno
+vo/AndroidStudioProjects/QuanLyLichH
+oc/app/src/main/java/com/example/qua
+nlylichhoc/ui/fragments/ExamsFragmen
+t.kt:27:9 Unresolved reference: 
+_binding
+At line:1 char:1
++ ./gradlew assembleDebug > 
+build_log_exams.txt 2>&1
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSp 
+   ecified: (e: file:///C:/U...ren  
+  ce: _binding:String) [], Remote   
+ Exception
+    + FullyQualifiedErrorId : Nativ 
+   eCommandError
+ 
+e: file:///C:/Users/Lenovo/AndroidSt
+udioProjects/QuanLyLichHoc/app/src/m
+ain/java/com/example/quanlylichhoc/u
+i/fragments/ExamsFragment.kt:28:16 
+Unresolved reference: binding
+e: file:///C:/Users/Lenovo/AndroidSt
+udioProjects/QuanLyLichHoc/app/src/m
+ain/java/com/example/quanlylichhoc/u
+i/fragments/ExamsFragment.kt:33:9 
+Unresolved reference: dbHelper
+e: file:///C:/Users/Lenovo/AndroidSt
+udioProjects/QuanLyLichHoc/app/src/m
+ain/java/com/example/quanlylichhoc/u
+i/fragments/ExamsFragment.kt:38:9 
+Unresolved reference: binding
+e: file:///C:/Users/Lenovo/AndroidSt
+udioProjects/QuanLyLichHoc/app/src/m
+ain/java/com/example/quanlylichhoc/u
+i/fragments/ExamsFragment.kt:53:9 
+Unresolved reference: binding
+e: file:///C:/Users/Lenovo/AndroidSt
+udioProjects/QuanLyLichHoc/app/src/m
+ain/java/com/example/quanlylichhoc/u
+i/fragments/ExamsFragment.kt:56:9 
+Unresolved reference: binding
+e: file:///C:/Users/Lenovo/AndroidSt
+udioProjects/QuanLyLichHoc/app/src/m
+ain/java/com/example/quanlylichhoc/u
+i/fragments/ExamsFragment.kt:62:9 
+Unresolved reference: isUpcomingTab
+e: file:///C:/Users/Lenovo/AndroidSt
+udioProjects/QuanLyLichHoc/app/src/m
+ain/java/com/example/quanlylichhoc/u
+i/fragments/ExamsFragment.kt:67:13 
+Unresolved reference: binding
+e: file:///C:/Users/Lenovo/AndroidSt
+udioProjects/QuanLyLichHoc/app/src/m
+ain/java/com/example/quanlylichhoc/u
+i/fragments/ExamsFragment.kt:68:13 
+Unresolved reference: binding
+e: file:///C:/Users/Lenovo/AndroidSt
+udioProjects/QuanLyLichHoc/app/src/m
+ain/java/com/example/quanlylichhoc/u
+i/fragments/ExamsFragment.kt:69:13 
+Unresolved reference: binding
+e: file:///C:/Users/Lenovo/AndroidSt
+udioProjects/QuanLyLichHoc/app/src/m
+ain/java/com/example/quanlylichhoc/u
+i/fragments/ExamsFragment.kt:71:13 
+Unresolved reference: binding
+e: file:///C:/Users/Lenovo/AndroidSt
+udioProjects/QuanLyLichHoc/app/src/m
+ain/java/com/example/quanlylichhoc/u
+i/fragments/ExamsFragment.kt:72:13 
+Unresolved reference: binding
+e: file:///C:/Users/Lenovo/AndroidSt
+udioProjects/QuanLyLichHoc/app/src/m
+ain/java/com/example/quanlylichhoc/u
+i/fragments/ExamsFragment.kt:73:13 
+Unresolved reference: binding
+e: file:///C:/Users/Lenovo/AndroidSt
+udioProjects/QuanLyLichHoc/app/src/m
+ain/java/com/example/quanlylichhoc/u
+i/fragments/ExamsFragment.kt:75:13 
+Unresolved reference: binding
+e: file:///C:/Users/Lenovo/AndroidSt
+udioProjects/QuanLyLichHoc/app/src/m
+ain/java/com/example/quanlylichhoc/u
+i/fragments/ExamsFragment.kt:76:13 
+Unresolved reference: binding
+e: file:///C:/Users/Lenovo/AndroidSt
+udioProjects/QuanLyLichHoc/app/src/m
+ain/java/com/example/quanlylichhoc/u
+i/fragments/ExamsFragment.kt:77:13 
+Unresolved reference: binding
+e: file:///C:/Users/Lenovo/AndroidSt
+udioProjects/QuanLyLichHoc/app/src/m
+ain/java/com/example/quanlylichhoc/u
+i/fragments/ExamsFragment.kt:79:13 
+Unresolved reference: binding
+e: file:///C:/Users/Lenovo/AndroidSt
+udioProjects/QuanLyLichHoc/app/src/m
+ain/java/com/example/quanlylichhoc/u
+i/fragments/ExamsFragment.kt:80:13 
+Unresolved reference: binding
+e: file:///C:/Users/Lenovo/AndroidSt
+udioProjects/QuanLyLichHoc/app/src/m
+ain/java/com/example/quanlylichhoc/u
+i/fragments/ExamsFragment.kt:81:13 
+Unresolved reference: binding
+e: file:///C:/Users/Lenovo/AndroidSt
+udioProjects/QuanLyLichHoc/app/src/m
+ain/java/com/example/quanlylichhoc/u
+i/fragments/ExamsFragment.kt:87:9 
+Unresolved reference: allExams
+e: file:///C:/Users/Lenovo/AndroidSt
+udioProjects/QuanLyLichHoc/app/src/m
+ain/java/com/example/quanlylichhoc/u
+i/fragments/ExamsFragment.kt:87:20 
+Unresolved reference: dbHelper
+e: file:///C:/Users/Lenovo/AndroidSt
+udioProjects/QuanLyLichHoc/app/src/m
+ain/java/com/example/quanlylichhoc/u
+i/fragments/ExamsFragment.kt:100:22 
+Unresolved reference: allExams
+e: file:///C:/Users/Lenovo/AndroidSt
+udioProjects/QuanLyLichHoc/app/src/m
+ain/java/com/example/quanlylichhoc/u
+i/fragments/ExamsFragment.kt:142:13 
+Unresolved reference: isUpcomingTab
+e: file:///C:/Users/Lenovo/AndroidSt
+udioProjects/QuanLyLichHoc/app/src/m
+ain/java/com/example/quanlylichhoc/u
+i/fragments/ExamsFragment.kt:144:13 
+Unresolved reference: binding
+e: file:///C:/Users/Lenovo/AndroidSt
+udioProjects/QuanLyLichHoc/app/src/m
+ain/java/com/example/quanlylichhoc/u
+i/fragments/ExamsFragment.kt:144:36 
+Variable expected
+e: file:///C:/Users/Lenovo/AndroidSt
+udioProjects/QuanLyLichHoc/app/src/m
+ain/java/com/example/quanlylichhoc/u
+i/fragments/ExamsFragment.kt:145:13 
+Unresolved reference: binding
+e: file:///C:/Users/Lenovo/AndroidSt
+udioProjects/QuanLyLichHoc/app/src/m
+ain/java/com/example/quanlylichhoc/u
+i/fragments/ExamsFragment.kt:145:38 
+Variable expected
+e: file:///C:/Users/Lenovo/AndroidSt
+udioProjects/QuanLyLichHoc/app/src/m
+ain/java/com/example/quanlylichhoc/u
+i/fragments/ExamsFragment.kt:146:13 
+Unresolved reference: binding
+e: file:///C:/Users/Lenovo/AndroidSt
+udioProjects/QuanLyLichHoc/app/src/m
+ain/java/com/example/quanlylichhoc/u
+i/fragments/ExamsFragment.kt:146:38 
+Variable expected
+e: file:///C:/Users/Lenovo/AndroidSt
+udioProjects/QuanLyLichHoc/app/src/m
+ain/java/com/example/quanlylichhoc/u
+i/fragments/ExamsFragment.kt:149:13 
+Unresolved reference: binding
+e: file:///C:/Users/Lenovo/AndroidSt
+udioProjects/QuanLyLichHoc/app/src/m
+ain/java/com/example/quanlylichhoc/u
+i/fragments/ExamsFragment.kt:149:36 
+Variable expected
+e: file:///C:/Users/Lenovo/AndroidSt
+udioProjects/QuanLyLichHoc/app/src/m
+ain/java/com/example/quanlylichhoc/u
+i/fragments/ExamsFragment.kt:150:13 
+Unresolved reference: binding
+e: file:///C:/Users/Lenovo/AndroidSt
+udioProjects/QuanLyLichHoc/app/src/m
+ain/java/com/example/quanlylichhoc/u
+i/fragments/ExamsFragment.kt:150:37 
+Variable expected
+e: file:///C:/Users/Lenovo/AndroidSt
+udioProjects/QuanLyLichHoc/app/src/m
+ain/java/com/example/quanlylichhoc/u
+i/fragments/ExamsFragment.kt:154:17 
+Unresolved reference: binding
+e: file:///C:/Users/Lenovo/AndroidSt
+udioProjects/QuanLyLichHoc/app/src/m
+ain/java/com/example/quanlylichhoc/u
+i/fragments/ExamsFragment.kt:154:57 
+Variable expected
+e: file:///C:/Users/Lenovo/AndroidSt
+udioProjects/QuanLyLichHoc/app/src/m
+ain/java/com/example/quanlylichhoc/u
+i/fragments/ExamsFragment.kt:155:17 
+Unresolved reference: binding
+e: file:///C:/Users/Lenovo/AndroidSt
+udioProjects/QuanLyLichHoc/app/src/m
+ain/java/com/example/quanlylichhoc/u
+i/fragments/ExamsFragment.kt:155:40 
+Variable expected
+e: file:///C:/Users/Lenovo/AndroidSt
+udioProjects/QuanLyLichHoc/app/src/m
+ain/java/com/example/quanlylichhoc/u
+i/fragments/ExamsFragment.kt:156:17 
+Unresolved reference: binding
+e: file:///C:/Users/Lenovo/AndroidSt
+udioProjects/QuanLyLichHoc/app/src/m
+ain/java/com/example/quanlylichhoc/u
+i/fragments/ExamsFragment.kt:156:41 
+Variable expected
+e: file:///C:/Users/Lenovo/AndroidSt
+udioProjects/QuanLyLichHoc/app/src/m
+ain/java/com/example/quanlylichhoc/u
+i/fragments/ExamsFragment.kt:158:17 
+Unresolved reference: binding
+e: file:///C:/Users/Lenovo/AndroidSt
+udioProjects/QuanLyLichHoc/app/src/m
+ain/java/com/example/quanlylichhoc/u
+i/fragments/ExamsFragment.kt:158:41 
+Variable expected
+e: file:///C:/Users/Lenovo/AndroidSt
+udioProjects/QuanLyLichHoc/app/src/m
+ain/java/com/example/quanlylichhoc/u
+i/fragments/ExamsFragment.kt:159:17 
+Unresolved reference: binding
+e: file:///C:/Users/Lenovo/AndroidSt
+udioProjects/QuanLyLichHoc/app/src/m
+ain/java/com/example/quanlylichhoc/u
+i/fragments/ExamsFragment.kt:159:41 
+Variable expected
+e: file:///C:/Users/Lenovo/AndroidSt
+udioProjects/QuanLyLichHoc/app/src/m
+ain/java/com/example/quanlylichhoc/u
+i/fragments/ExamsFragment.kt:164:17 
+Unresolved reference: binding
+e: file:///C:/Users/Lenovo/AndroidSt
+udioProjects/QuanLyLichHoc/app/src/m
+ain/java/com/example/quanlylichhoc/u
+i/fragments/ExamsFragment.kt:164:41 
+Variable expected
+e: file:///C:/Users/Lenovo/AndroidSt
+udioProjects/QuanLyLichHoc/app/src/m
+ain/java/com/example/quanlylichhoc/u
+i/fragments/ExamsFragment.kt:165:17 
+Unresolved reference: binding
+e: file:///C:/Users/Lenovo/AndroidSt
+udioProjects/QuanLyLichHoc/app/src/m
+ain/java/com/example/quanlylichhoc/u
+i/fragments/ExamsFragment.kt:165:41 
+Variable expected
+e: file:///C:/Users/Lenovo/AndroidSt
+udioProjects/QuanLyLichHoc/app/src/m
+ain/java/com/example/quanlylichhoc/u
+i/fragments/ExamsFragment.kt:172:17 
+Unresolved reference: binding
+e: file:///C:/Users/Lenovo/AndroidSt
+udioProjects/QuanLyLichHoc/app/src/m
+ain/java/com/example/quanlylichhoc/u
+i/fragments/ExamsFragment.kt:172:57 
+Variable expected
+e: file:///C:/Users/Lenovo/AndroidSt
+udioProjects/QuanLyLichHoc/app/src/m
+ain/java/com/example/quanlylichhoc/u
+i/fragments/ExamsFragment.kt:175:30 
+Unresolved reference: binding
+e: file:///C:/Users/Lenovo/AndroidSt
+udioProjects/QuanLyLichHoc/app/src/m
+ain/java/com/example/quanlylichhoc/u
+i/fragments/ExamsFragment.kt:176:38 
+Variable expected
+e: file:///C:/Users/Lenovo/AndroidSt
+udioProjects/QuanLyLichHoc/app/src/m
+ain/java/com/example/quanlylichhoc/u
+i/fragments/ExamsFragment.kt:177:38 
+Variable expected
+e: file:///C:/Users/Lenovo/AndroidSt
+udioProjects/QuanLyLichHoc/app/src/m
+ain/java/com/example/quanlylichhoc/u
+i/fragments/ExamsFragment.kt:181:35 
+Variable expected
+e: file:///C:/Users/Lenovo/AndroidSt
+udioProjects/QuanLyLichHoc/app/src/m
+ain/java/com/example/quanlylichhoc/u
+i/fragments/ExamsFragment.kt:183:31 
+Variable expected
+e: file:///C:/Users/Lenovo/AndroidSt
+udioProjects/QuanLyLichHoc/app/src/m
+ain/java/com/example/quanlylichhoc/u
+i/fragments/ExamsFragment.kt:184:29 
+Variable expected
+e: file:///C:/Users/Lenovo/AndroidSt
+udioProjects/QuanLyLichHoc/app/src/m
+ain/java/com/example/quanlylichhoc/u
+i/fragments/ExamsFragment.kt:193:17 
+Unresolved reference: binding
+e: file:///C:/Users/Lenovo/AndroidSt
+udioProjects/QuanLyLichHoc/app/src/m
+ain/java/com/example/quanlylichhoc/u
+i/fragments/ExamsFragment.kt:193:41 
+Variable expected
+e: file:///C:/Users/Lenovo/AndroidSt
+udioProjects/QuanLyLichHoc/app/src/m
+ain/java/com/example/quanlylichhoc/u
+i/fragments/ExamsFragment.kt:194:17 
+Unresolved reference: binding
+e: file:///C:/Users/Lenovo/AndroidSt
+udioProjects/QuanLyLichHoc/app/src/m
+ain/java/com/example/quanlylichhoc/u
+i/fragments/ExamsFragment.kt:194:41 
+Variable expected
+e: file:///C:/Users/Lenovo/AndroidSt
+udioProjects/QuanLyLichHoc/app/src/m
+ain/java/com/example/quanlylichhoc/u
+i/fragments/ExamsFragment.kt:199:13 
+Unresolved reference: binding
+e: file:///C:/Users/Lenovo/AndroidSt
+udioProjects/QuanLyLichHoc/app/src/m
+ain/java/com/example/quanlylichhoc/u
+i/fragments/ExamsFragment.kt:199:36 
+Variable expected
+e: file:///C:/Users/Lenovo/AndroidSt
+udioProjects/QuanLyLichHoc/app/src/m
+ain/java/com/example/quanlylichhoc/u
+i/fragments/ExamsFragment.kt:200:13 
+Unresolved reference: binding
+e: file:///C:/Users/Lenovo/AndroidSt
+udioProjects/QuanLyLichHoc/app/src/m
+ain/java/com/example/quanlylichhoc/u
+i/fragments/ExamsFragment.kt:200:53 
+Variable expected
+e: file:///C:/Users/Lenovo/AndroidSt
+udioProjects/QuanLyLichHoc/app/src/m
+ain/java/com/example/quanlylichhoc/u
+i/fragments/ExamsFragment.kt:201:13 
+Unresolved reference: binding
+e: file:///C:/Users/Lenovo/AndroidSt
+udioProjects/QuanLyLichHoc/app/src/m
+ain/java/com/example/quanlylichhoc/u
+i/fragments/ExamsFragment.kt:201:37 
+Variable expected
+e: file:///C:/Users/Lenovo/AndroidSt
+udioProjects/QuanLyLichHoc/app/src/m
+ain/java/com/example/quanlylichhoc/u
+i/fragments/ExamsFragment.kt:202:13 
+Unresolved reference: binding
+e: file:///C:/Users/Lenovo/AndroidSt
+udioProjects/QuanLyLichHoc/app/src/m
+ain/java/com/example/quanlylichhoc/u
+i/fragments/ExamsFragment.kt:202:37 
+Variable expected
+e: file:///C:/Users/Lenovo/AndroidSt
+udioProjects/QuanLyLichHoc/app/src/m
+ain/java/com/example/quanlylichhoc/u
+i/fragments/ExamsFragment.kt:203:13 
+Unresolved reference: binding
+e: file:///C:/Users/Lenovo/AndroidSt
+udioProjects/QuanLyLichHoc/app/src/m
+ain/java/com/example/quanlylichhoc/u
+i/fragments/ExamsFragment.kt:203:37 
+Variable expected
+e: file:///C:/Users/Lenovo/AndroidSt
+udioProjects/QuanLyLichHoc/app/src/m
+ain/java/com/example/quanlylichhoc/u
+i/fragments/ExamsFragment.kt:209:13 
+Unresolved reference: binding
+e: file:///C:/Users/Lenovo/AndroidSt
+udioProjects/QuanLyLichHoc/app/src/m
+ain/java/com/example/quanlylichhoc/u
+i/fragments/ExamsFragment.kt:209:36 
+Variable expected
+e: file:///C:/Users/Lenovo/AndroidSt
+udioProjects/QuanLyLichHoc/app/src/m
+ain/java/com/example/quanlylichhoc/u
+i/fragments/ExamsFragment.kt:212:17 
+Unresolved reference: binding
+e: file:///C:/Users/Lenovo/AndroidSt
+udioProjects/QuanLyLichHoc/app/src/m
+ain/java/com/example/quanlylichhoc/u
+i/fragments/ExamsFragment.kt:212:42 
+Variable expected
+e: file:///C:/Users/Lenovo/AndroidSt
+udioProjects/QuanLyLichHoc/app/src/m
+ain/java/com/example/quanlylichhoc/u
+i/fragments/ExamsFragment.kt:213:17 
+Unresolved reference: binding
+e: file:///C:/Users/Lenovo/AndroidSt
+udioProjects/QuanLyLichHoc/app/src/m
+ain/java/com/example/quanlylichhoc/u
+i/fragments/ExamsFragment.kt:213:42 
+Variable expected
+e: file:///C:/Users/Lenovo/AndroidSt
+udioProjects/QuanLyLichHoc/app/src/m
+ain/java/com/example/quanlylichhoc/u
+i/fragments/ExamsFragment.kt:215:17 
+Unresolved reference: binding
+e: file:///C:/Users/Lenovo/AndroidSt
+udioProjects/QuanLyLichHoc/app/src/m
+ain/java/com/example/quanlylichhoc/u
+i/fragments/ExamsFragment.kt:215:42 
+Variable expected
+e: file:///C:/Users/Lenovo/AndroidSt
+udioProjects/QuanLyLichHoc/app/src/m
+ain/java/com/example/quanlylichhoc/u
+i/fragments/ExamsFragment.kt:216:17 
+Unresolved reference: binding
+e: file:///C:/Users/Lenovo/AndroidSt
+udioProjects/QuanLyLichHoc/app/src/m
+ain/java/com/example/quanlylichhoc/u
+i/fragments/ExamsFragment.kt:216:42 
+Variable expected
+e: file:///C:/Users/Lenovo/AndroidSt
+udioProjects/QuanLyLichHoc/app/src/m
+ain/java/com/example/quanlylichhoc/u
+i/fragments/ExamsFragment.kt:218:17 
+Unresolved reference: binding
+e: file:///C:/Users/Lenovo/AndroidSt
+udioProjects/QuanLyLichHoc/app/src/m
+ain/java/com/example/quanlylichhoc/u
+i/fragments/ExamsFragment.kt:218:42 
+Variable expected
+e: file:///C:/Users/Lenovo/AndroidSt
+udioProjects/QuanLyLichHoc/app/src/m
+ain/java/com/example/quanlylichhoc/u
+i/fragments/ExamsFragment.kt:219:17 
+Unresolved reference: binding
+e: file:///C:/Users/Lenovo/AndroidSt
+udioProjects/QuanLyLichHoc/app/src/m
+ain/java/com/example/quanlylichhoc/u
+i/fragments/ExamsFragment.kt:219:42 
+Variable expected
+e: file:///C:/Users/Lenovo/AndroidSt
+udioProjects/QuanLyLichHoc/app/src/m
+ain/java/com/example/quanlylichhoc/u
+i/fragments/ExamsFragment.kt:227:22 
+Unresolved reference: binding
+e: file:///C:/Users/Lenovo/AndroidSt
+udioProjects/QuanLyLichHoc/app/src/m
+ain/java/com/example/quanlylichhoc/u
+i/fragments/ExamsFragment.kt:243:40 
+Unresolved reference: TextView
+e: file:///C:/Users/Lenovo/AndroidSt
+udioProjects/QuanLyLichHoc/app/src/m
+ain/java/com/example/quanlylichhoc/u
+i/fragments/ExamsFragment.kt:243:65 
+Variable expected
+e: file:///C:/Users/Lenovo/AndroidSt
+udioProjects/QuanLyLichHoc/app/src/m
+ain/java/com/example/quanlylichhoc/u
+i/fragments/ExamsFragment.kt:244:40 
+Unresolved reference: TextView
+e: file:///C:/Users/Lenovo/AndroidSt
+udioProjects/QuanLyLichHoc/app/src/m
+ain/java/com/example/quanlylichhoc/u
+i/fragments/ExamsFragment.kt:244:65 
+Variable expected
+e: file:///C:/Users/Lenovo/AndroidSt
+udioProjects/QuanLyLichHoc/app/src/m
+ain/java/com/example/quanlylichhoc/u
+i/fragments/ExamsFragment.kt:279:17 
+Unresolved reference: dbHelper
+e: file:///C:/Users/Lenovo/AndroidSt
+udioProjects/QuanLyLichHoc/app/src/m
+ain/java/com/example/quanlylichhoc/u
+i/fragments/ExamsFragment.kt:290:9 
+Unresolved reference: dbHelper
+e: file:///C:/Users/Lenovo/AndroidSt
+udioProjects/QuanLyLichHoc/app/src/m
+ain/java/com/example/quanlylichhoc/u
+i/fragments/ExamsFragment.kt:291:9 
+Unresolved reference: _binding
+
+[Incubating] Problems report is available at: file:///C:/Users/Lenovo/AndroidStudioProjects/QuanLyLichHoc/build/reports/problems/problems-report.html
+
+FAILURE: Build failed with an 
+exception.
+
+* What went wrong:
+Execution failed for task 
+':app:compileDebugKotlin'.
+> A failure occurred while 
+executing org.jetbrains.kotlin.compi
+lerRunner.GradleCompilerRunnerWithWo
+rkers$GradleKotlinCompilerWorkAction
+   > Compilation error. See log for 
+more details
+
+* Try:
+> Run with --stacktrace option to 
+get the stack trace.
+> Run with --info or --debug option 
+to get more log output.
+> Run with --scan to generate a 
+Build Scan (Powered by Develocity).
+> Get more help at 
+https://help.gradle.org.
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/9.1.0/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD FAILED in 7s
+31 actionable tasks: 13 executed, 18 up-to-date

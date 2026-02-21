@@ -25,6 +25,12 @@ class TasksFragment : Fragment() {
     private lateinit var dbHelper: com.example.quanlylichhoc.database.DatabaseHelper
     private var allTasks: List<com.example.quanlylichhoc.utils.TaskItem> = emptyList()
     private var isShowingTodo = true
+    
+    // Sort states
+    private val activeSorts = mutableSetOf<String>() // "DEADLINE", "PRIORITY", "SUBJECT"
+    private val SORT_DEADLINE = "DEADLINE"
+    private val SORT_PRIORITY = "PRIORITY" 
+    private val SORT_SUBJECT = "SUBJECT"
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -49,12 +55,71 @@ class TasksFragment : Fragment() {
 
         setupHeader()
         setupTabs()
+        setupSortChips()
         loadTasks()
     }
     
     override fun onResume() {
         super.onResume()
         loadTasks()
+    }
+    
+    private fun setupSortChips() {
+        // Let's iterate and update UI based on activeSorts
+        
+        // Chip Deadline
+        binding.chipSortDeadline.setOnClickListener {
+            toggleSort(SORT_DEADLINE)
+            updateSortUI()
+        }
+        
+        // Chip Priority
+        binding.chipSortPriority.setOnClickListener {
+            toggleSort(SORT_PRIORITY)
+            updateSortUI()
+        }
+        
+        // Chip Subject
+        binding.chipSortSubject.setOnClickListener {
+            toggleSort(SORT_SUBJECT)
+            updateSortUI()
+        }
+    }
+    
+    private fun toggleSort(sortType: String) {
+        if (activeSorts.contains(sortType)) {
+            activeSorts.remove(sortType)
+        } else {
+            activeSorts.add(sortType)
+        }
+        filterAndDisplayTasks()
+    }
+    
+    private fun updateSortUI() {
+        updateChipState(binding.chipSortDeadline, activeSorts.contains(SORT_DEADLINE))
+        updateChipState(binding.chipSortPriority, activeSorts.contains(SORT_PRIORITY))
+        updateChipState(binding.chipSortSubject, activeSorts.contains(SORT_SUBJECT))
+    }
+
+    private fun updateChipState(chip: android.widget.TextView, isSelected: Boolean) {
+        val colorSelected = ContextCompat.getColor(requireContext(), R.color.purple_500)
+        val colorUnselected = ContextCompat.getColor(requireContext(), R.color.text_secondary)
+        val bgSelected = R.drawable.bg_sort_chip_selected
+        val bgUnselected = R.drawable.bg_filter_chip
+        
+        val paddingHorizontal = (12 * resources.displayMetrics.density).toInt()
+        val paddingVertical = (6 * resources.displayMetrics.density).toInt()
+
+        if (isSelected) {
+            chip.setTextColor(colorSelected)
+            chip.setBackgroundResource(bgSelected)
+        } else {
+            chip.setTextColor(colorUnselected)
+            chip.setBackgroundResource(bgUnselected)
+        }
+        
+        // Reset padding as setBackgroundResource resets it to drawable's padding (usually 0)
+        chip.setPadding(paddingHorizontal, paddingVertical, paddingHorizontal, paddingVertical)
     }
 
     private fun setupHeader() {
@@ -93,7 +158,7 @@ class TasksFragment : Fragment() {
 
         if (isTodo) {
             binding.tabTodo.setBackgroundResource(R.drawable.bg_tab_selected)
-            binding.tabTodo.setTextColor(ContextCompat.getColor(requireContext(), R.color.blue_500)) 
+            binding.tabTodo.setTextColor(ContextCompat.getColor(requireContext(), R.color.purple_500)) 
             binding.tabTodo.setPadding(0, padding8dp, 0, padding8dp)
             
             binding.tabDone.setBackgroundResource(R.drawable.bg_tab_unselected)
@@ -101,7 +166,7 @@ class TasksFragment : Fragment() {
             binding.tabDone.setPadding(0, padding8dp, 0, padding8dp)
         } else {
             binding.tabDone.setBackgroundResource(R.drawable.bg_tab_selected)
-            binding.tabDone.setTextColor(ContextCompat.getColor(requireContext(), R.color.blue_500))
+            binding.tabDone.setTextColor(ContextCompat.getColor(requireContext(), R.color.purple_500))
             binding.tabDone.setPadding(0, padding8dp, 0, padding8dp)
             
             binding.tabTodo.setBackgroundResource(R.drawable.bg_tab_unselected)
@@ -128,13 +193,61 @@ class TasksFragment : Fragment() {
         
         // Simple grouping logic: header for everything for now or just items
          if (filtered.isNotEmpty()) {
-             displayList.add(TaskListItem.Header(if (isShowingTodo) "Cần làm" else "Đã hoàn thành"))
-             displayList.addAll(filtered.map { 
+             val mappedTasks = filtered.map { 
                  val subjectRawName = if (it.subjectId != -1L) {
                      dbHelper.getSubjectById(it.subjectId.toString())?.name ?: "Khác"
                  } else {
                      "Khác"
                  }
+                 TaskListItem.TaskItem(
+                     id = it.id,
+                     title = it.title,
+                     time = formatTaskDeadline(it.deadline),
+                     subject = subjectRawName,
+                     priority = it.priority,
+                     description = it.description,
+                     isCompleted = it.isCompleted,
+                     isOverdue = checkIsOverdue(it.deadline) && !it.isCompleted
+                 )
+             }
+             
+
+             // 1. Create list of (DB_Item, SubjectName) tuples
+             val richItems = filtered.map { 
+                 val sName = if (it.subjectId != -1L) dbHelper.getSubjectById(it.subjectId.toString())?.name ?: "Khác" else "Khác"
+                 Pair(it, sName)
+             }
+             
+             // 2. Sort tuples
+             val sortedRichItems = if (activeSorts.isNotEmpty()) {
+                 richItems.sortedWith(Comparator { (t1, s1), (t2, s2) ->
+                     var result = 0
+                     
+                     if (activeSorts.contains(SORT_PRIORITY)) {
+                         val p1 = getPriorityValue(t1.priority)
+                         val p2 = getPriorityValue(t2.priority)
+                         result = p2.compareTo(p1)
+                     }
+                     
+                     if (result == 0 && activeSorts.contains(SORT_DEADLINE)) {
+                         val d1 = getDeadlineTimestamp(t1.deadline)
+                         val d2 = getDeadlineTimestamp(t2.deadline)
+                         result = d1.compareTo(d2)
+                     }
+                     
+                     if (result == 0 && activeSorts.contains(SORT_SUBJECT)) {
+                         result = s1.compareTo(s2)
+                     }
+                     
+                     result
+                 })
+             } else {
+                 richItems
+             }
+             
+             // 3. Map to Adapter Items
+             displayList.add(TaskListItem.Header(if (isShowingTodo) "Cần làm" else "Đã hoàn thành"))
+             displayList.addAll(sortedRichItems.map { (it, subjectRawName) ->
                  TaskListItem.TaskItem(
                      id = it.id,
                      title = it.title,
@@ -312,9 +425,57 @@ class TasksFragment : Fragment() {
         }
     }
 
+    private fun getPriorityValue(priority: String): Int {
+        return when (priority) {
+            "Cao" -> 3
+            "Trung bình" -> 2
+            "Thấp" -> 1
+            else -> 0
+        }
+    }
+
+    private fun getDeadlineTimestamp(deadline: String): Long {
+        if (deadline.isEmpty() || deadline == "Không có hạn") return Long.MAX_VALUE // Push to bottom
+
+        try {
+            var dateStr = deadline
+            val now = java.util.Calendar.getInstance()
+            
+            if (dateStr.startsWith("Hôm nay")) {
+                 val sdfDate = SimpleDateFormat("dd/MM/yyyy", Locale("vi", "VN"))
+                 dateStr = dateStr.replace("Hôm nay", sdfDate.format(now.time))
+            } 
+            else if (dateStr.startsWith("Ngày mai")) {
+                 val cal = java.util.Calendar.getInstance()
+                 cal.add(java.util.Calendar.DAY_OF_YEAR, 1)
+                 val sdfDate = SimpleDateFormat("dd/MM/yyyy", Locale("vi", "VN"))
+                 dateStr = dateStr.replace("Ngày mai", sdfDate.format(cal.time))
+            }
+
+            val parts = dateStr.split(" ")
+            val datePart = parts[0]
+            val timePart = if (parts.size > 1) parts[1] else ""
+            
+            val sdfFull = if (timePart.isNotEmpty()) {
+                SimpleDateFormat("dd/MM/yyyy HH:mm", Locale("vi", "VN"))
+            } else {
+                SimpleDateFormat("dd/MM/yyyy", Locale("vi", "VN"))
+            }
+            
+            val date = sdfFull.parse(if (timePart.isNotEmpty()) "$datePart $timePart" else datePart)
+            return date?.time ?: Long.MAX_VALUE
+        } catch (e: Exception) {
+            return Long.MAX_VALUE
+        }
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         dbHelper.close()
         _binding = null
     }
 }
+
+
+
+

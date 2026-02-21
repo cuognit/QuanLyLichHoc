@@ -5,11 +5,11 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 
-class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
+class DatabaseHelper(private val context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
 
     companion object {
         private const val DATABASE_NAME = "QuanLyLichHoc.db"
-        private const val DATABASE_VERSION = 4
+        private const val DATABASE_VERSION = 5
 
         // Table Names
         const val TABLE_SUBJECTS = "subjects"
@@ -51,19 +51,22 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
         const val KEY_EXAM_ROOM = "room" // Can be different from subject room
         const val KEY_EXAM_SBD = "sbd"
         const val KEY_EXAM_NOTE = "note"
+        const val KEY_EXAM_MATERIAL = "is_material_allowed"
+        const val KEY_EXAM_REMINDER = "has_reminder"
     }
 
     override fun onCreate(db: SQLiteDatabase) {
         createTables(db)
-        // seedData(db) // Removed per user request
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
-        db.execSQL("DROP TABLE IF EXISTS $TABLE_EXAMS")
-        db.execSQL("DROP TABLE IF EXISTS $TABLE_TASKS")
-        db.execSQL("DROP TABLE IF EXISTS $TABLE_CLASSES")
-        db.execSQL("DROP TABLE IF EXISTS $TABLE_SUBJECTS")
-        onCreate(db)
+        if (oldVersion < 5) {
+            db.execSQL("DROP TABLE IF EXISTS $TABLE_EXAMS")
+            db.execSQL("DROP TABLE IF EXISTS $TABLE_TASKS")
+            db.execSQL("DROP TABLE IF EXISTS $TABLE_CLASSES")
+            db.execSQL("DROP TABLE IF EXISTS $TABLE_SUBJECTS")
+            onCreate(db)
+        }
     }
 
     private fun createTables(db: SQLiteDatabase) {
@@ -106,6 +109,8 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
                 + KEY_EXAM_ROOM + " TEXT,"
                 + KEY_EXAM_SBD + " TEXT,"
                 + KEY_EXAM_NOTE + " TEXT,"
+                + KEY_EXAM_MATERIAL + " INTEGER,"
+                + KEY_EXAM_REMINDER + " INTEGER,"
                 + "FOREIGN KEY($KEY_SUBJECT_ID) REFERENCES $TABLE_SUBJECTS($KEY_ID)" + ")")
 
         db.execSQL(createSubjects)
@@ -207,7 +212,57 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
             put(KEY_CLASS_END, end)
             put(KEY_CLASS_ROOM, room)
         }
-        return db.insert(TABLE_CLASSES, null, values)
+        val id = db.insert(TABLE_CLASSES, null, values)
+        if (id != -1L) {
+            scheduleClassNotifications(id)
+        }
+        return id
+    }
+
+    private fun scheduleClassNotifications(classId: Long) {
+        val db = this.readableDatabase
+        val cursor = db.rawQuery("SELECT c.*, s.name FROM $TABLE_CLASSES c JOIN $TABLE_SUBJECTS s ON c.subject_id = s.id WHERE c.id = ?", arrayOf(classId.toString()))
+        if (cursor.moveToFirst()) {
+            val day = cursor.getInt(cursor.getColumnIndexOrThrow(KEY_CLASS_DAY))
+            val start = cursor.getString(cursor.getColumnIndexOrThrow(KEY_CLASS_START))
+            val subjectName = cursor.getString(cursor.getColumnIndexOrThrow(KEY_SUBJECT_NAME))
+            
+            val calendar = java.util.Calendar.getInstance()
+            val currentDay = calendar.get(java.util.Calendar.DAY_OF_WEEK)
+            
+            // Adjust to the next occurrence of 'day'
+            var daysToAdd = day - currentDay
+            
+            val parts = start.split(":")
+            val hours = parts[0].toInt()
+            val minutes = parts[1].toInt()
+
+            val targetTime = java.util.Calendar.getInstance()
+            targetTime.add(java.util.Calendar.DAY_OF_YEAR, daysToAdd)
+            targetTime.set(java.util.Calendar.HOUR_OF_DAY, hours)
+            targetTime.set(java.util.Calendar.MINUTE, minutes)
+            targetTime.set(java.util.Calendar.SECOND, 0)
+
+            // If it's already past this time today, schedule for next week
+            if (targetTime.timeInMillis <= System.currentTimeMillis()) {
+                if (daysToAdd <= 0) {
+                    targetTime.add(java.util.Calendar.DAY_OF_YEAR, 7)
+                }
+            }
+            
+            val timeInMillis = targetTime.timeInMillis
+            
+            // Notification at start time
+            com.example.quanlylichhoc.utils.NotificationHelper.scheduleNotification(
+                context, classId.toInt() * 100, "Lịch học: $subjectName", "Đến giờ vào học rồi!", timeInMillis, "class"
+            )
+            
+            // Notification 1 day before
+            com.example.quanlylichhoc.utils.NotificationHelper.scheduleNotification(
+                context, classId.toInt() * 100 + 1, "Nhắc nhở ngày mai", "Bạn có lịch học $subjectName vào ngày mai lúc $start", timeInMillis - 24 * 60 * 60 * 1000, "class"
+            )
+        }
+        cursor.close()
     }
 
     fun getSubjectIdByClassId(classId: String): Long {
@@ -229,6 +284,8 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
     fun deleteClass(id: String) {
         val db = this.writableDatabase
         db.delete(TABLE_CLASSES, "$KEY_ID = ?", arrayOf(id))
+        com.example.quanlylichhoc.utils.NotificationHelper.cancelNotification(context, id.toInt() * 100)
+        com.example.quanlylichhoc.utils.NotificationHelper.cancelNotification(context, id.toInt() * 100 + 1)
     }
 
     fun getAllClasses(): List<com.example.quanlylichhoc.utils.ClassItem> {
@@ -335,7 +392,29 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
             put(KEY_TASK_DEADLINE, deadline)
             put(KEY_TASK_COMPLETED, if (isCompleted) 1 else 0)
         }
-        return db.insert(TABLE_TASKS, null, values)
+        val id = db.insert(TABLE_TASKS, null, values)
+        if (id != -1L) {
+            scheduleTaskNotification(id, title, deadline)
+        }
+        return id
+    }
+
+    private fun scheduleTaskNotification(taskId: Long, title: String, deadline: String) {
+        val format = java.text.SimpleDateFormat("dd/MM/yyyy HH:mm", java.util.Locale.getDefault())
+        try {
+            val date = format.parse(deadline)
+            if (date != null) {
+                val timeInMillis = date.time
+                // At deadline
+                com.example.quanlylichhoc.utils.NotificationHelper.scheduleNotification(
+                    context, taskId.toInt() * 1000, "Nhiệm vụ đến hạn", "Nhiệm vụ '$title' đã đến hạn!", timeInMillis, "task"
+                )
+                // 1 day before
+                com.example.quanlylichhoc.utils.NotificationHelper.scheduleNotification(
+                    context, taskId.toInt() * 1000 + 1, "Nhắc nhở nhiệm vụ", "Nhiệm vụ '$title' sẽ đến hạn vào ngày mai!", timeInMillis - 24 * 60 * 60 * 1000, "task"
+                )
+            }
+        } catch (e: Exception) {}
     }
     
     fun updateTask(id: String, title: String, desc: String, priority: String, deadline: String, subjectId: Long = -1) {
@@ -350,6 +429,7 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
              }
         }
         db.update(TABLE_TASKS, values, "$KEY_ID = ?", arrayOf(id))
+        scheduleTaskNotification(id.toLong(), title, deadline)
     }
 
     fun updateTaskStatus(id: String, isCompleted: Boolean) {
@@ -358,6 +438,10 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
             put(KEY_TASK_COMPLETED, if (isCompleted) 1 else 0)
         }
         db.update(TABLE_TASKS, values, "$KEY_ID = ?", arrayOf(id))
+        if (isCompleted) {
+            com.example.quanlylichhoc.utils.NotificationHelper.cancelNotification(context, id.toInt() * 1000)
+            com.example.quanlylichhoc.utils.NotificationHelper.cancelNotification(context, id.toInt() * 1000 + 1)
+        }
     }
 
     fun getTaskById(id: String): com.example.quanlylichhoc.utils.TaskItem? {
@@ -382,6 +466,8 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
     fun deleteTask(id: String) {
         val db = this.writableDatabase
         db.delete(TABLE_TASKS, "$KEY_ID = ?", arrayOf(id))
+        com.example.quanlylichhoc.utils.NotificationHelper.cancelNotification(context, id.toInt() * 1000)
+        com.example.quanlylichhoc.utils.NotificationHelper.cancelNotification(context, id.toInt() * 1000 + 1)
     }
 
     fun getAllTasks(): List<com.example.quanlylichhoc.utils.TaskItem> {
@@ -463,17 +549,19 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
                 val date = cursor.getString(cursor.getColumnIndexOrThrow(KEY_EXAM_DATE))
                 val time = cursor.getString(cursor.getColumnIndexOrThrow(KEY_EXAM_TIME))
                 val type = cursor.getString(cursor.getColumnIndexOrThrow(KEY_EXAM_TYPE))
+                val duration = cursor.getInt(cursor.getColumnIndexOrThrow(KEY_EXAM_DURATION))
                 val room = cursor.getString(cursor.getColumnIndexOrThrow(KEY_EXAM_ROOM)) ?: ""
                 val sbd = cursor.getString(cursor.getColumnIndexOrThrow(KEY_EXAM_SBD)) ?: ""
+                val note = cursor.getString(cursor.getColumnIndexOrThrow(KEY_EXAM_NOTE)) ?: ""
                 
-                exams.add(com.example.quanlylichhoc.utils.ExamItem(id, name, date, time, type, room, sbd))
+                exams.add(com.example.quanlylichhoc.utils.ExamItem(id, name, date, time, type, room, sbd, duration, note))
             } while (cursor.moveToNext())
         }
         cursor.close()
         return exams
     }
 
-    fun insertExam(subjectId: Long, type: String, date: String, time: String, duration: Int, room: String, sbd: String = "", note: String = ""): Long {
+    fun insertExam(subjectId: Long, type: String, date: String, time: String, duration: Int, room: String, sbd: String = "", note: String = "", isMaterialAllowed: Boolean = false, hasReminder: Boolean = true): Long {
         val db = this.writableDatabase
         val values = ContentValues().apply {
             put(KEY_SUBJECT_ID, subjectId)
@@ -484,13 +572,48 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
             put(KEY_EXAM_ROOM, room)
             put(KEY_EXAM_SBD, sbd)
             put(KEY_EXAM_NOTE, note)
+            put(KEY_EXAM_MATERIAL, if (isMaterialAllowed) 1 else 0)
+            put(KEY_EXAM_REMINDER, if (hasReminder) 1 else 0)
         }
-        return db.insert(TABLE_EXAMS, null, values)
+        val id = db.insert(TABLE_EXAMS, null, values)
+        if (id != -1L && hasReminder) {
+            scheduleExamNotifications(id, subjectId, type, date, time)
+        }
+        return id
+    }
+
+    private fun scheduleExamNotifications(examId: Long, subjectId: Long, type: String, dateStr: String, timeStr: String) {
+        val subjectName = getSubjectNameById(subjectId)
+        val timeInMillis = com.example.quanlylichhoc.utils.NotificationHelper.parseDateTime(dateStr, timeStr)
+        
+        if (timeInMillis > 0) {
+            // At start time
+            com.example.quanlylichhoc.utils.NotificationHelper.scheduleNotification(
+                context, examId.toInt() * 2000, "Lịch thi: $subjectName", "Bạn có buổi thi $type ngay bây giờ!", timeInMillis, "exam"
+            )
+            // 1 day before
+            com.example.quanlylichhoc.utils.NotificationHelper.scheduleNotification(
+                context, examId.toInt() * 2000 + 1, "Nhắc nhở ngày mai", "Bạn có lịch thi $subjectName ($type) vào ngày mai lúc $timeStr", timeInMillis - 24 * 60 * 60 * 1000, "exam"
+            )
+        }
+    }
+
+    private fun getSubjectNameById(id: Long): String {
+        val db = this.readableDatabase
+        val cursor = db.query(TABLE_SUBJECTS, arrayOf(KEY_SUBJECT_NAME), "$KEY_ID=?", arrayOf(id.toString()), null, null, null)
+        var name = "Môn học"
+        if (cursor.moveToFirst()) {
+            name = cursor.getString(0)
+        }
+        cursor.close()
+        return name
     }
     
      fun deleteExam(id: String) {
         val db = this.writableDatabase
         db.delete(TABLE_EXAMS, "$KEY_ID = ?", arrayOf(id))
+        com.example.quanlylichhoc.utils.NotificationHelper.cancelNotification(context, id.toInt() * 2000)
+        com.example.quanlylichhoc.utils.NotificationHelper.cancelNotification(context, id.toInt() * 2000 + 1)
     }
 
     // --- Subjects List with Schedule ---
@@ -582,6 +705,89 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
         cursor.close()
         return subject
     }
+    fun updateExam(id: String, subjectId: Long, type: String, date: String, time: String, duration: Int, room: String, sbd: String, note: String, isMaterialAllowed: Boolean, hasReminder: Boolean) {
+        val db = this.writableDatabase
+        val values = ContentValues().apply {
+            put(KEY_SUBJECT_ID, subjectId)
+            put(KEY_EXAM_TYPE, type)
+            put(KEY_EXAM_DATE, date)
+            put(KEY_EXAM_TIME, time)
+            put(KEY_EXAM_DURATION, duration)
+            put(KEY_EXAM_ROOM, room)
+            put(KEY_EXAM_SBD, sbd)
+            put(KEY_EXAM_NOTE, note)
+            put(KEY_EXAM_MATERIAL, if (isMaterialAllowed) 1 else 0)
+            put(KEY_EXAM_REMINDER, if (hasReminder) 1 else 0)
+        }
+        db.update(TABLE_EXAMS, values, "$KEY_ID = ?", arrayOf(id))
+        if (hasReminder) {
+            scheduleExamNotifications(id.toLong(), subjectId, type, date, time)
+        } else {
+            com.example.quanlylichhoc.utils.NotificationHelper.cancelNotification(context, id.toInt() * 2000)
+            com.example.quanlylichhoc.utils.NotificationHelper.cancelNotification(context, id.toInt() * 2000 + 1)
+        }
+    }
+
+    fun getExamById(id: String): ExamDetail? {
+        val db = this.readableDatabase
+        val selectQuery = "SELECT * FROM $TABLE_EXAMS WHERE $KEY_ID = ?"
+        val cursor = db.rawQuery(selectQuery, arrayOf(id))
+        var exam: ExamDetail? = null
+        if (cursor.moveToFirst()) {
+            val subjectId = cursor.getLong(cursor.getColumnIndexOrThrow(KEY_SUBJECT_ID))
+            val type = cursor.getString(cursor.getColumnIndexOrThrow(KEY_EXAM_TYPE))
+            val date = cursor.getString(cursor.getColumnIndexOrThrow(KEY_EXAM_DATE))
+            val time = cursor.getString(cursor.getColumnIndexOrThrow(KEY_EXAM_TIME))
+            val duration = cursor.getInt(cursor.getColumnIndexOrThrow(KEY_EXAM_DURATION))
+            val room = cursor.getString(cursor.getColumnIndexOrThrow(KEY_EXAM_ROOM))
+            val sbd = cursor.getString(cursor.getColumnIndexOrThrow(KEY_EXAM_SBD))
+            val note = cursor.getString(cursor.getColumnIndexOrThrow(KEY_EXAM_NOTE))
+            val isMaterialAllowed = cursor.getInt(cursor.getColumnIndexOrThrow(KEY_EXAM_MATERIAL)) == 1
+            val hasReminder = cursor.getInt(cursor.getColumnIndexOrThrow(KEY_EXAM_REMINDER)) == 1
+            
+            exam = ExamDetail(id, subjectId, type, date, time, duration, room, sbd, note, isMaterialAllowed, hasReminder)
+        }
+        cursor.close()
+        return exam
+    }
+
+    fun getClassesByDay(day: Int): List<com.example.quanlylichhoc.utils.ClassItem> {
+        val classes = ArrayList<com.example.quanlylichhoc.utils.ClassItem>()
+        val selectQuery = "SELECT c.*, s.name, s.teacher, s.color, s.start_date, s.end_date FROM classes c INNER JOIN subjects s ON c.subject_id = s.id WHERE c.day_of_week = ? ORDER BY c.start_time ASC"
+        
+        val db = this.readableDatabase
+        val cursor = db.rawQuery(selectQuery, arrayOf(day.toString()))
+        
+        if (cursor.moveToFirst()) {
+            do {
+                val id = cursor.getString(cursor.getColumnIndexOrThrow("id"))
+                val subjectName = cursor.getString(cursor.getColumnIndexOrThrow("name"))
+                val teacher = cursor.getString(cursor.getColumnIndexOrThrow("teacher"))
+                val room = cursor.getString(cursor.getColumnIndexOrThrow("room_name"))
+                val startTime = cursor.getString(cursor.getColumnIndexOrThrow("start_time"))
+                val endTime = cursor.getString(cursor.getColumnIndexOrThrow("end_time"))
+                val color = cursor.getString(cursor.getColumnIndexOrThrow("color"))
+                val classDay = cursor.getInt(cursor.getColumnIndexOrThrow("day_of_week"))
+                
+                var startDate = ""
+                var endDate = ""
+                try {
+                     startDate = cursor.getString(cursor.getColumnIndexOrThrow("start_date")) ?: ""
+                     endDate = cursor.getString(cursor.getColumnIndexOrThrow("end_date")) ?: ""
+                } catch (e: Exception) {}
+
+                val calendar = java.util.Calendar.getInstance()
+                val currentDay = calendar.get(java.util.Calendar.DAY_OF_WEEK)
+                val isToday = (classDay == currentDay)
+                
+                classes.add(com.example.quanlylichhoc.utils.ClassItem(
+                    id, subjectName, room, teacher, startTime, endTime, classDay, isToday, startDate, endDate, color
+                ))
+            } while (cursor.moveToNext())
+        }
+        cursor.close()
+        return classes
+    }
 }
 
 data class SubjectItem(
@@ -594,4 +800,18 @@ data class SubjectItem(
     val startDate: String,
     val endDate: String,
     val note: String
+)
+
+data class ExamDetail(
+    val id: String,
+    val subjectId: Long,
+    val type: String,
+    val date: String,
+    val time: String,
+    val duration: Int,
+    val room: String,
+    val sbd: String,
+    val note: String,
+    val isMaterialAllowed: Boolean,
+    val hasReminder: Boolean
 )

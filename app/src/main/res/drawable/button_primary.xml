@@ -3,7 +3,7 @@
     android:color="#4DFFFFFF"> <!-- Light ripple for dark background -->
     <item>
         <shape android:shape="rectangle">
-            <solid android:color="#2196F3"/>
+            <solid android:color="?attr/colorPrimary"/>
             <corners android:radius="12dp"/>
         </shape>
     </item>

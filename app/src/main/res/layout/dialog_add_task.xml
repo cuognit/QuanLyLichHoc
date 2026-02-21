@@ -12,7 +12,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Thêm nhiệm vụ"
-        android:textColor="#333333"
+        android:textColor="@color/text_main"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -37,7 +37,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="Môn học"
-        android:textColor="#757575"
+        android:textColor="@color/text_subtitle"
         android:textSize="12sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -52,7 +52,7 @@
          android:background="@drawable/bg_input_field"
          android:padding="12dp"
          android:text="Chọn môn học"
-         android:textColor="#333333"
+         android:textColor="@color/text_main"
          android:textSize="14sp"
          android:drawableEnd="@drawable/ic_chevron_down"
          app:layout_constraintTop_toBottomOf="@id/tv_label_subject"/>
@@ -64,7 +64,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="Tên nhiệm vụ *"
-        android:textColor="#757575"
+        android:textColor="@color/text_subtitle"
         android:textSize="12sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -78,7 +78,7 @@
         android:background="@drawable/bg_input_field"
         android:hint="VD: Làm bài 5 trang 10..."
         android:padding="12dp"
-        android:textColor="#333333"
+        android:textColor="@color/text_main"
         android:textSize="14sp"
         app:layout_constraintTop_toBottomOf="@id/tv_label_name" />
 
@@ -89,7 +89,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="Mô tả chi tiết"
-        android:textColor="#757575"
+        android:textColor="@color/text_subtitle"
         android:textSize="12sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -105,7 +105,7 @@
         android:gravity="top"
         android:minLines="3"
         android:padding="12dp"
-        android:textColor="#333333"
+        android:textColor="@color/text_main"
         android:textSize="14sp"
         app:layout_constraintTop_toBottomOf="@id/tv_label_desc" />
 
@@ -129,7 +129,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Hạn chót"
-                android:textColor="#757575"
+                android:textColor="@color/text_subtitle"
                 android:textSize="12sp"
                 android:textStyle="bold" />
 
@@ -141,7 +141,7 @@
                 android:background="@drawable/bg_input_field"
                 android:padding="12dp"
                 android:text="dd/mm/yyyy"
-                android:textColor="#333333"
+                android:textColor="@color/text_main"
                 android:textSize="14sp"
                 android:drawableEnd="@drawable/ic_calendar_basic"/>
         </LinearLayout>
@@ -157,7 +157,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Giờ"
-                android:textColor="#757575"
+                android:textColor="@color/text_subtitle"
                 android:textSize="12sp"
                 android:textStyle="bold" />
 
@@ -169,7 +169,7 @@
                 android:background="@drawable/bg_input_field"
                 android:padding="12dp"
                 android:text="--:-- --"
-                android:textColor="#333333"
+                android:textColor="@color/text_main"
                 android:textSize="14sp"
                 android:gravity="center"
                  android:drawableEnd="@drawable/ic_time"/>
@@ -183,7 +183,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="Mức độ ưu tiên"
-        android:textColor="#757575"
+        android:textColor="@color/text_subtitle"
         android:textSize="12sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -210,7 +210,7 @@
             android:gravity="center"
             android:padding="10dp"
             android:text="Thấp"
-            android:textColor="#757575"
+            android:textColor="@color/text_subtitle"
             android:textSize="14sp"
             android:textStyle="bold" />
 
@@ -223,7 +223,7 @@
             android:gravity="center"
             android:padding="10dp"
             android:text="Trung bình"
-            android:textColor="#6200EE"
+            android:textColor="?attr/colorPrimary"
             android:textSize="14sp"
             android:textStyle="bold"
              />
@@ -237,7 +237,7 @@
             android:gravity="center"
             android:padding="10dp"
             android:text="Cao"
-            android:textColor="#757575"
+            android:textColor="@color/text_subtitle"
             android:textSize="14sp"
             android:textStyle="bold" />
     </LinearLayout>
@@ -257,7 +257,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_marginEnd="8dp"
-            android:background="#F5F5F5"
+            android:background="@color/bg_secondary"
             android:gravity="center"
             android:padding="12dp"
             android:text="Hủy"

@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F6F7FB"
+    android:background="@color/bg_main"
     android:fillViewport="true">
 
     <LinearLayout
@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:padding="16dp"
-            android:background="#FFFFFF"
+            android:background="@color/card_bg"
             android:gravity="center_vertical">
 
             <!-- Back button -->
@@ -44,7 +44,7 @@
                     android:text="Nhập môn Lập trình"
                     android:textSize="18sp"
                     android:textStyle="bold"
-                    android:textColor="#1A1A2E"/>
+                    android:textColor="@color/text_main"/>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -94,7 +94,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:background="#FFFFFF"
+            android:background="@color/card_bg"
             android:padding="16dp"
             android:layout_marginTop="8dp">
 
@@ -225,7 +225,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:background="#FFFFFF"
+            android:background="@color/card_bg"
             android:padding="16dp"
             android:layout_marginTop="8dp">
 
@@ -242,7 +242,7 @@
                     android:text="Nhiệm vụ liên quan"
                     android:textSize="15sp"
                     android:textStyle="bold"
-                    android:textColor="#1A1A2E"/>
+                    android:textColor="@color/text_main"/>
 
                 <TextView
                     android:id="@+id/btnViewAllTasks"
@@ -284,7 +284,7 @@
                         android:text="Nộp bài tập lớn"
                         android:textSize="14sp"
                         android:textStyle="bold"
-                        android:textColor="#1A1A2E"/>
+                        android:textColor="@color/text_main"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -325,7 +325,7 @@
                         android:text="Ôn thi giữa kỳ"
                         android:textSize="14sp"
                         android:textStyle="bold"
-                        android:textColor="#1A1A2E"/>
+                        android:textColor="@color/text_main"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -344,7 +344,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:background="#FFFFFF"
+            android:background="@color/card_bg"
             android:padding="16dp"
             android:layout_marginTop="8dp">
 
@@ -386,7 +386,7 @@
                         android:text="De_cuong_mon_hoc.pdf"
                         android:textSize="13sp"
                         android:textStyle="bold"
-                        android:textColor="#1A1A2E"/>
+                        android:textColor="@color/text_main"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -435,7 +435,7 @@
                         android:text="Slide Bài giảng 1 - Giới thiệu"
                         android:textSize="13sp"
                         android:textStyle="bold"
-                        android:textColor="#1A1A2E"/>
+                        android:textColor="@color/text_main"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -484,7 +484,7 @@
                         android:text="Tai_Lieu_Lan_Tuan-3.pdf"
                         android:textSize="13sp"
                         android:textStyle="bold"
-                        android:textColor="#1A1A2E"/>
+                        android:textColor="@color/text_main"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -510,7 +510,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:background="#FFFFFF"
+            android:background="@color/card_bg"
             android:padding="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="80dp">

@@ -14,6 +14,8 @@ sealed class ExamItem {
         val date: String,
         val location: String,
         val sbd: String,
+        val duration: Int,
+        val note: String,
         val daysLeft: Int
     ) : ExamItem()
 
@@ -65,11 +67,29 @@ class ExamsAdapter(
         private val tvTitle: TextView = view.findViewById(R.id.tv_title)
         private val tvDate: TextView = view.findViewById(R.id.tv_location_time) 
         private val tvDaysLeft: TextView = view.findViewById(R.id.tv_days_left)
+        private val tvRoom: TextView = view.findViewById(R.id.tv_room_detail)
+        private val tvSbd: TextView = view.findViewById(R.id.tv_sbd_detail)
+        private val tvDuration: TextView = view.findViewById(R.id.tv_duration)
+        private val tvNote: TextView = view.findViewById(R.id.tv_note)
         
         fun bind(item: ExamItem.Upcoming, onLongClick: (ExamItem) -> Unit) {
             tvTitle.text = item.title
-            tvDate.text = "${item.location} • ${item.date}"
-            tvDaysLeft.text = "còn ${item.daysLeft} ngày"
+            tvDate.text = item.date 
+            
+            val daysLeftText = if (item.daysLeft == 0) "Hôm nay" else "còn ${item.daysLeft} ngày"
+            tvDaysLeft.text = daysLeftText
+            
+            tvRoom.text = item.location
+            tvSbd.text = item.sbd
+            tvDuration.text = "${item.duration} phút"
+            
+            if (item.note.isNotEmpty()) {
+                tvNote.visibility = View.VISIBLE
+                tvNote.text = item.note
+                tvNote.isSelected = true // Enable marquee
+            } else {
+                tvNote.visibility = View.GONE
+            }
             
             itemView.setOnLongClickListener {
                 onLongClick(item)

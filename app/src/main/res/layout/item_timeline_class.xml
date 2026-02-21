@@ -82,7 +82,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_rounded_card"
-                android:backgroundTint="@color/purple_500"
+                android:backgroundTint="#4CAF50"
                 android:paddingHorizontal="8dp"
                 android:paddingVertical="4dp"
                 android:text="ĐANG DIỄN RA"
