@@ -1,12 +1,18 @@
 
 package com.example.quanlylichhoc.ui.fragments
 
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
 import com.example.quanlylichhoc.R
 import com.example.quanlylichhoc.databinding.FragmentProfileBinding
 import com.example.quanlylichhoc.databinding.ItemSettingRowBinding
@@ -16,6 +22,18 @@ class ProfileFragment : Fragment() {
 
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
+
+    private val pickMedia = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
+        if (uri != null) {
+            val flag = Intent.FLAG_GRANT_READ_URI_PERMISSION
+            requireActivity().contentResolver.takePersistableUriPermission(uri, flag)
+
+            val prefs = requireContext().getSharedPreferences("AppPrefs", Context.MODE_PRIVATE)
+            prefs.edit().putString("AVATAR_URI", uri.toString()).apply()
+
+            loadAvatarToView(uri)
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,6 +55,11 @@ class ProfileFragment : Fragment() {
         val prefs = requireContext().getSharedPreferences("AppPrefs", android.content.Context.MODE_PRIVATE)
         val userName = prefs.getString("user_name", "Người dùng")
         binding.tvUserName.text = userName
+
+        val savedUriString = prefs.getString("AVATAR_URI", null)
+        if (savedUriString != null) {
+            loadAvatarToView(Uri.parse(savedUriString))
+        }
     }
 
     private fun setupRows() {
@@ -89,6 +112,10 @@ class ProfileFragment : Fragment() {
 
         binding.rowTheme.root.setOnClickListener {
             showThemePickerDialog(prefs)
+        }
+
+        binding.imgCamera.setOnClickListener {
+            pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
         }
     }
 
@@ -145,6 +172,14 @@ class ProfileFragment : Fragment() {
     }
 
     data class ThemeOption(val id: String, val name: String, val colorCode: String)
+
+    private fun loadAvatarToView(uri: Uri) {
+        // ⚠️ CHÚ Ý: Đổi "imgAvatar" thành đúng ID của ImageView chứa avatar trong file fragment_profile.xml của bạn
+        Glide.with(this)
+            .load(uri)
+            .circleCrop()
+            .into(binding.imgAvatar)
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()
