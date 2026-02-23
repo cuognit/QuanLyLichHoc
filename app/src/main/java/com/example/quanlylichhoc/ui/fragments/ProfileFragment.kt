@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.quanlylichhoc.R
+import com.example.quanlylichhoc.database.CalendarSyncManager
 import com.example.quanlylichhoc.databinding.FragmentProfileBinding
 import com.example.quanlylichhoc.databinding.ItemSettingRowBinding
 import com.example.quanlylichhoc.ui.MainActivity
@@ -16,6 +17,19 @@ class ProfileFragment : Fragment() {
 
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
+    private val requestPermissionLauncher = registerForActivityResult(
+        androidx.activity.result.contract.ActivityResultContracts.RequestMultiplePermissions()
+    ) { permissions ->
+        val readGranted = permissions[android.Manifest.permission.READ_CALENDAR] ?: false
+        val writeGranted = permissions[android.Manifest.permission.WRITE_CALENDAR] ?: false
+
+        if (readGranted && writeGranted) {
+            // Người dùng đã cho phép -> Chạy hàm đồng bộ
+            performSync()
+        } else {
+            Toast.makeText(requireContext(), "Bạn cần cấp quyền Lịch để đồng bộ!", Toast.LENGTH_SHORT).show()
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -90,6 +104,145 @@ class ProfileFragment : Fragment() {
         binding.rowTheme.root.setOnClickListener {
             showThemePickerDialog(prefs)
         }
+        binding.rowBackup.root.setOnClickListener {
+            // Gọi hộp thoại xin quyền
+            requestPermissionLauncher.launch(arrayOf(
+                android.Manifest.permission.READ_CALENDAR,
+                android.Manifest.permission.WRITE_CALENDAR
+            ))
+        }
+    }
+    private fun performSync() {
+        val context = requireContext()
+
+        // Khởi tạo Database và SyncManager
+        val dbHelper = com.example.quanlylichhoc.database.DatabaseHelper(context)
+        val syncManager = com.example.quanlylichhoc.database.CalendarSyncManager(context)
+
+        // Lấy dữ liệu Lịch Học và Lịch Thi từ DB mới
+        val listClasses = dbHelper.getAllClasses()
+        val listExams = dbHelper.getAllExams()
+
+        if (listClasses.isEmpty() && listExams.isEmpty()) {
+            Toast.makeText(context, "Chưa có Lịch học hoặc Lịch thi nào để đồng bộ!", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        var successCount = 0
+        val sdfDate = java.text.SimpleDateFormat("dd/MM/yyyy", java.util.Locale.getDefault())
+
+        // ==========================================
+        // 1. ĐỒNG BỘ LỊCH HỌC (Classes)
+        // ==========================================
+        for (classItem in listClasses) {
+            android.util.Log.d("SyncDebug", "Đang xử lý môn: ${classItem.subjectName}") // Sửa lại đúng tên biến của bạn
+
+            try {
+                if (classItem.startDate.isEmpty() || classItem.endDate.isEmpty()) {
+                    android.util.Log.e("SyncDebug", "-> BỎ QUA: Môn này chưa nhập Ngày bắt đầu / Ngày kết thúc")
+                    continue
+                }
+
+                val startDate = sdfDate.parse(classItem.startDate)
+                val endDate = sdfDate.parse(classItem.endDate)
+
+                if (startDate == null || endDate == null) {
+                    android.util.Log.e("SyncDebug", "-> BỎ QUA: Lỗi parse ngày tháng (Có thể sai định dạng dd/MM/yyyy)")
+                    continue
+                }
+
+                val calendar = java.util.Calendar.getInstance()
+                calendar.time = startDate
+
+                val timePartsStart = classItem.startTime.split(":")
+                val hStart = timePartsStart[0].toInt()
+                val mStart = timePartsStart[1].toInt()
+
+                val timePartsEnd = classItem.endTime.split(":")
+                val hEnd = timePartsEnd[0].toInt()
+                val mEnd = timePartsEnd[1].toInt()
+
+                var isSynced = false
+                while (!calendar.time.after(endDate)) {
+                    if (calendar.get(java.util.Calendar.DAY_OF_WEEK) == classItem.dayOfWeek) { // Sửa classItem.day cho đúng
+
+                        val eventStart = calendar.clone() as java.util.Calendar
+                        eventStart.set(java.util.Calendar.HOUR_OF_DAY, hStart)
+                        eventStart.set(java.util.Calendar.MINUTE, mStart)
+                        eventStart.set(java.util.Calendar.SECOND, 0)
+
+                        val eventEnd = calendar.clone() as java.util.Calendar
+                        eventEnd.set(java.util.Calendar.HOUR_OF_DAY, hEnd)
+                        eventEnd.set(java.util.Calendar.MINUTE, mEnd)
+                        eventEnd.set(java.util.Calendar.SECOND, 0)
+
+                        val title = "Học: \${classItem.subjectName}"
+                        val isSuccess = syncManager.syncScheduleToCalendar(
+                            subjectName = title,
+                            room = classItem.room ?: "",
+                            startTimeInMillis = eventStart.timeInMillis,
+                            endTimeInMillis = eventEnd.timeInMillis
+                        )
+
+                        if (isSuccess) {
+                            isSynced = true
+                        } else {
+                            android.util.Log.e("SyncDebug", "-> LỖI: Hàm syncScheduleToCalendar trả về false!")
+                        }
+                    }
+                    calendar.add(java.util.Calendar.DAY_OF_YEAR, 1)
+                }
+
+                if (isSynced) {
+                    successCount++
+                    android.util.Log.d("SyncDebug", "-> THÀNH CÔNG: Đã đẩy môn này lên Lịch!")
+                }
+
+            } catch (e: Exception) {
+                android.util.Log.e("SyncDebug", "-> LỖI CODE: \${e.message}")
+                e.printStackTrace()
+            }
+        }
+
+        // ==========================================
+        // 2. ĐỒNG BỘ LỊCH THI (Exams)
+        // ==========================================
+        for (exam in listExams) {
+            try {
+                val examDate = sdfDate.parse(exam.date) ?: continue
+                val timeParts = exam.time.split(":")
+                val hStart = timeParts[0].toInt()
+                val mStart = timeParts[1].toInt()
+
+                // Tạo thời gian Bắt đầu thi
+                val eventStart = java.util.Calendar.getInstance()
+                eventStart.time = examDate
+                eventStart.set(java.util.Calendar.HOUR_OF_DAY, hStart)
+                eventStart.set(java.util.Calendar.MINUTE, mStart)
+                eventStart.set(java.util.Calendar.SECOND, 0)
+
+                // Tạo thời gian Kết thúc (Bằng giờ bắt đầu + số phút làm bài)
+                val eventEnd = eventStart.clone() as java.util.Calendar
+                eventEnd.add(java.util.Calendar.MINUTE, exam.duration)
+
+                val title = "Thi ${exam.type}: ${exam.subjectName}"
+                val roomDesc = if (exam.room.isNotEmpty()) "Phòng: ${exam.room} | SBD: ${exam.sbd}" else ""
+
+                val isSuccess = syncManager.syncScheduleToCalendar(
+                    subjectName = title,
+                    room = roomDesc,
+                    startTimeInMillis = eventStart.timeInMillis,
+                    endTimeInMillis = eventEnd.timeInMillis
+                )
+                if (isSuccess) successCount++
+
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+
+        // Thông báo hoàn thành
+        Toast.makeText(context, "Đã đồng bộ thành công $successCount sự kiện lên Lịch!", Toast.LENGTH_LONG).show()
     }
 
     private fun showThemePickerDialog(prefs: android.content.SharedPreferences) {
