@@ -53,6 +53,7 @@
                 app:layout_constraintEnd_toEndOf="@id/img_avatar" />
 
             <ImageView
+                android:id="@+id/img_camera"
                 android:layout_width="14dp"
                 android:layout_height="14dp"
                 android:src="@drawable/ic_camera"
